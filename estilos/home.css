@@ -1,0 +1,96 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#cabecalho{
+    background-color: #03222B;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+#logo{
+    width: 4%;
+    padding: 10px;
+}
+
+#userImg{
+    width: 8%;
+}
+
+#user{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#barraUser{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 80px;
+}
+
+#sinoImg{
+    width: 100%;
+}
+
+#sino{
+    width: 3%;
+    transition: background-color 0.5s;
+    border-radius: 50%;
+}
+
+#sino:hover{
+    background-color: #43A0D6;
+    transition: background-color 0.5s;
+    border-radius: 50%;
+}
+
+#criarProjeto{
+    width: 60%;
+    background-color: #FBFBFB;
+    border: #D3D5E1 solid 1px;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+#criarProjeto h1{
+    color: #4F4F4F;
+}
+
+#containerCriaProjeto{
+    display: flex;
+    justify-content: center;
+}
+
+#criar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border: dashed #4F4F4F 2px;
+    margin: 12px;
+    border-radius: 8px;
+    transition: background-color 0.5s;
+    overflow: hidden;
+    height: 100px;
+}
+
+#criar p{
+    padding: 20px 0;
+    font-weight: 400;
+    color: #4F4F4F;
+    font-size: 50px;
+    transition: font-size 0.3s;
+}
+
+#criar:hover{
+    background-color: #B0D3EF;
+    transition: background-color 0.5s;
+}
+
+#criar:hover p{
+    font-size: 60px;
+    transition: font-size 0.3s;
+}
