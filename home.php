@@ -53,7 +53,7 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
                         <div class="infoProjeto">
                             <div>
                                 <h2>Projeto 1</h2>
-                                <p>descricao</p>
+                                <p>descrição</p>
                             </div>
                             <div class="maisInfoProjeto">
                                 <a class="maisLink" href="">...</a> <!-- editar nome, descrição e prazo, excluir projeto ou marcar como concluído -->
@@ -64,7 +64,7 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
                         <div class="infoProjeto">
                             <div>
                                 <h2>Projeto 2</h2>
-                                <p>descricao</p>
+                                <p>descrição</p>
                             </div>
                             <div class="maisInfoProjeto">
                                 <a class="maisLink" href="">...</a>
