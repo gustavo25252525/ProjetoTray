@@ -19,20 +19,19 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
 <body>
     <!-- Cabeçalho com logomarca da Tray -->
     <header id="cabecalho">
-        <img id="logo" src="assets/logo-branca.png" alt="logo da Tray">
-    </header>
+        <img id="logo" src="assets/logo.png" alt="logo da Tray">
 
-    <main>
         <!-- "Barra" onde fica o indicador de usuário e o sino de notificações -->
         <div id="barraUser">
             <div id="user">
                 <img id="userImg" src="assets/user.png" alt="Imagem de usuário">
                 <p>(Nome do usuário)</p>
             </div>
-
             <a id="sino" href=""><img id="sinoImg" src="assets/sino.png" alt="sino de notificações"></a>
         </div>
+    </header>
 
+    <main>
         <!-- Barra de criação de projeto -->
         <div id="containerCriaProjeto">
             <div id="criarProjeto">
@@ -51,9 +50,9 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
                 <div id="listaProjetos">
                     <div class="degradeFundo">
                         <div class="infoProjeto">
-                            <div>
-                                <h2>Projeto 1</h2>
-                                <p>descricao</p>
+                            <h2>Projeto 1</h2>
+                            <div class="barra">
+                                <div class="progressoBarra"></div>
                             </div>
                             <div class="maisInfoProjeto">
                                 <a class="maisLink" href="">...</a> <!-- editar nome, descrição e prazo, excluir projeto ou marcar como concluído -->
@@ -62,9 +61,9 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
                     </div>
                     <div class="degradeFundo">
                         <div class="infoProjeto">
-                            <div>
-                                <h2>Projeto 2</h2>
-                                <p>descricao</p>
+                            <h2>Projeto 2</h2>
+                            <div class="barra">
+                                <div class="progressoBarra"></div>
                             </div>
                             <div class="maisInfoProjeto">
                                 <a class="maisLink" href="">...</a>
@@ -97,12 +96,12 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
                 <form action="" id="formCriaProjeto">
                     <div class="campoForm">
                         <label for="nome">Nome</label>
-                        <input type="text" name="nome" id="inputNomeProjeto">
+                        <input type="text" name="nome" required id="inputNomeProjeto">
                     </div>
 
                     <div class="campoForm">
                         <label for="descricao">Descrição</label>
-                        <input type="text" name="descricao" id="inputDescProjeto">
+                        <input type="text" name="descricao" required id="inputDescProjeto">
                     </div>
 
                     <div id="btn">

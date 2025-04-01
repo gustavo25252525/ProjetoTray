@@ -25,27 +25,23 @@ document.getElementById('sino').addEventListener('click', (event) => {
     link.append(img);
 });
 
-document.getElementById('criar').addEventListener('click', (event) => {
-    event.preventDefault();
+const modal = document.getElementById("meuModal");
+const openModal = document.getElementById("criarProjeto");
+const closeModal = document.getElementById("fecharModal");
 
-    const modal = document.getElementById("meuModal");
-    const openModal = document.getElementById("criarProjeto");
-    const closeModal = document.getElementById("fecharModal");
+// Abre o modal
+openModal.onclick = () => {
+    modal.classList.add("show");
+}
 
-    // Abre o modal
-    openModal.onclick = () => {
-        modal.style.display = "block";
+// Fecha o modal
+closeModal.onclick = () => {
+    modal.classList.remove("show");
+}
+
+// Fecha o modal ao clicar fora do conteúdo
+window.onclick = (event) => {
+    if (event.target == modal) {
+        modal.classList.remove("show");
     }
-
-    // Fecha o modal
-    closeModal.onclick = () => {
-        modal.style.display = "none";
-    }
-
-    // Fecha o modal ao clicar fora do conteúdo
-    window.onclick = (event) => {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-});
+}
