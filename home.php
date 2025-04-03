@@ -45,7 +45,12 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
         <!-- Local onde ficam os projetos já existentes -->
         <div id="containerProjetos">
             <div id="projetos">
-                <h1>Projetos</h1>
+                <div id="cabecalhoProjetos">
+                    <h1>Projetos</h1>
+                    <div>
+                        <input type="text" name="busca" id="busca" placeholder="Buscar">
+                    </div>
+                </div>
 
                 <div id="listaProjetos">
                     <div class="degradeFundo">

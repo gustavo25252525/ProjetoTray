@@ -139,6 +139,21 @@ body{
     margin: 20px 0;
 }
 
+#cabecalhoProjetos{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cabecalhoProjetos input{
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+}
+
+
 .maisInfoProjeto{
     display: flex;
     align-items: center;
@@ -265,7 +280,7 @@ body{
     transition: border-color 0.3s;
 }
 
-.campoForm input:focus {
+.campoForm input:focus, #cabecalhoProjetos input:focus {
     border-color: #43A0D6;
     outline: none;
 }

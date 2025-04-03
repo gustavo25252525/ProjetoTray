@@ -26,7 +26,7 @@ document.getElementById('sino').addEventListener('click', (event) => {
 });
 
 const modal = document.getElementById("meuModal");
-const openModal = document.getElementById("criarProjeto");
+const openModal = document.getElementById("criar");
 const closeModal = document.getElementById("fecharModal");
 
 // Abre o modal
@@ -45,3 +45,36 @@ window.onclick = (event) => {
         modal.classList.remove("show");
     }
 }
+
+document.getElementById('busca').addEventListener('input', () => {
+    var busca = document.getElementById('busca').value;
+    var xhr = new XMLHttpRequest();
+
+    if (busca.length > 0) {
+        xhr.open('GET', 'buscar.php?termo=' + encodeURIComponent(busca), true);
+    } else {
+        xhr.open('GET', 'buscar.php', true);
+    }
+    
+    xhr.onreadystatechange = () => {
+        var resultadosDiv = document.getElementById('listaProjetos');
+        resultadosDiv.innerHTML = '';
+
+        try{
+            var resultados = JSON.parse(xhr.responseText);
+
+            if (resultados.length > 0) {
+                resultados.forEach(function(produto) {
+                    var div = document.createElement('div');
+                    div.textContent = produto.nome;
+                    resultadosDiv.appendChild(div);
+                });
+            } else {
+                resultadosDiv.textContent = 'Nenhum resultado encontrado.';
+            }
+        } catch (erro) {
+            console.error("Ocorreu um erro:", erro.message);
+        }
+    };
+    xhr.send();
+});
