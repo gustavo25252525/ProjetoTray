@@ -1,8 +1,3 @@
 Home:
-1 - Colocar img de usuário e nome junto na barra (deixar branca mais ou menos do jeito q é a original msm) (feito)
-2 - Tentar arredondar mais as bordas (feito)
-3 - Diminuir a caixa de criar projeto, alinhar os campos com o titulo (no meio do caminho) (feito)
-4 - Barra pra procurar projeto e filtro pra projeto (em andamento/finalizado (ordenar por data))
-5 - Fazer um segundo bloco do lado de Projetos onde ficariam os concluidos e daria pra clicar nele onde ele expandiria e o de projetos em andamento encolheria (ficaria igual o de concluidos antes de clicar)
-6 - Mudar a cor de fundo pro azul suavisado e dependendo fazer degrade com branco
-7 - Fazer presets de fundo de projeto (no futuro deixar escolher quando for criar projeto)
+1 - Fazer um segundo bloco do lado de Projetos onde ficariam os concluidos e daria pra clicar nele onde ele expandiria e o de projetos em andamento encolheria (ficaria igual o de concluidos antes de clicar)
+2 - Fazer presets de fundo de projeto (no futuro deixar escolher quando for criar projeto)

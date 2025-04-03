@@ -5,6 +5,14 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
 // $comando = $pdo->query($sql);       // Montamos e deixamos o comando SQL preparado
 // $resultado = $comando->fetchAll();  // Executamos o comando $sql, nesse caso, todo o conteudo da tabela produto
 
+function limitarTexto($texto, $limite) {
+    // Verifica se o comprimento do texto é maior que o limite
+    if (strlen($texto) > $limite) {
+        // Trunca o texto e adiciona "..."
+        return substr($texto, 0, $limite) . '...';
+    }
+    return $texto; // Retorna o texto original se não exceder o limite
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +53,13 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
         <!-- Local onde ficam os projetos já existentes -->
         <div id="containerProjetos">
             <div id="projetos">
-                <h1>Projetos</h1>
+                <div id="cabecalhoProjetos">
+                    <h1>Projetos</h1>
+                    <div id="barraBusca">
+                        <img src="assets/lupa.png" alt="lupa da barra de busca" id="lupa">
+                        <input type="text" name="busca" id="busca" placeholder="Buscar">
+                    </div>
+                </div>
 
                 <div id="listaProjetos">
                     <div class="degradeFundo">
@@ -72,25 +86,25 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
                     </div>
 
                     <!-- Código em PHP que vai fazer as inclusões dos produtos quando o banco estiver pronto -->
-                    <?php /* foreach ($resultado as $projeto) { 
+                    <?php /* foreach ($resultado as $projeto) { ?>
                         <div class="degradeFundo">
                             <div class="infoProjeto">
                                 <h2><?= $projeto["nome"] ?></h2>
                                 <p><?= $projeto["descricao"] ?></p>
                                 <p><?= $projeto["prazo"] ?></p>
-                                <a id="maisInfoProjeto">...</a> // editar nome, descrição e prazo, excluir projeto ou marcar como concluído 
+                                <a class="maisInfoProjeto">...</a> // editar nome, descrição e prazo, excluir projeto ou marcar como concluído 
                             </div>
                         </div>
-                    } */ ?>
+                    <?php } */ ?>
 
                 </div>
             </div>
         </div>
     </main>
 
-    <div id="meuModal">
+    <div id="modalCriarProjeto">
         <div id="criandoProjeto">
-            <span id="fecharModal">&times;</span>
+            <span id="fecharCriarProjeto">&times;</span>
             <h1>Criar Novo Projeto</h1>
             <div id="containerForm">
                 <form action="" id="formCriaProjeto">
@@ -109,6 +123,40 @@ $sql = "select * from projetos";    // String com o comando SQL a ser executado
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+
+    <div id="modalNotificacoes">
+        <div id="notificacoes">
+            <div class="notificacao">
+                <h3>Assunto</h3>
+                <h4>Projeto referente</h4>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi expedita, ad delectus quis, nemo debitis temporibus dicta nesciunt odit error fugiat. Excepturi ut minima delectus. Consequuntur numquam harum voluptate ex!</p>
+            </div>
+            <div class="notificacao">
+                <h3>Assunto</h3>
+                <h4>Projeto referente</h4>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi expedita, ad delectus quis, nemo debitis temporibus dicta nesciunt odit error fugiat. Excepturi ut minima delectus. Consequuntur numquam harum voluptate ex!</p>
+            </div>
+            <div class="notificacao">
+                <h3>Assunto</h3>
+                <h4>Projeto referente</h4>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi expedita, ad delectus quis, nemo debitis temporibus dicta nesciunt odit error fugiat. Excepturi ut minima delectus. Consequuntur numquam harum voluptate ex!</p>
+            </div>
+            <div class="notificacao">
+                <h3>Assunto</h3>
+                <h4>Projeto referente</h4>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi expedita, ad delectus quis, nemo debitis temporibus dicta nesciunt odit error fugiat. Excepturi ut minima delectus. Consequuntur numquam harum voluptate ex!</p>
+            </div>
+
+            <!-- Código em PHP para puxar as notificações do banco -->
+            <?php /* foreach ($notificacoes as $notificacao) { ?>
+                <div class="notificacao">
+                    <h3><?= $notificacao["nome"] ?></h3>
+                    <h4><?= $notificacao["projeto"] ?></h4>
+                    <p><?= limitarTexto($notificacao["texto"], 80) ?></p>
+                </div>
+            <?php } */ ?>
         </div>
     </div>
 

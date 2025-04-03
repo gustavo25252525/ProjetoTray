@@ -139,6 +139,31 @@ body{
     margin: 20px 0;
 }
 
+#cabecalhoProjetos{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cabecalhoProjetos input{
+    font-size: 18px;
+    border: none;
+}
+
+#barraBusca{
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 8px;
+    border-radius: 8px;
+}
+
+#lupa{
+    width: 1.2em;
+}
+
 .maisInfoProjeto{
     display: flex;
     align-items: center;
@@ -181,7 +206,7 @@ body{
     float: right;
 }
 
-#meuModal{
+#modalCriarProjeto{
     position: fixed;
     z-index: 1;
     left: 0;
@@ -194,7 +219,8 @@ body{
     transition: opacity 0.2s, visibility 0.2s;
 }
 
-#meuModal.show{
+#modalCriarProjeto.show, #modalNotificacoes.show{
+    display: block;
     visibility: visible;
     opacity: 1;
 }
@@ -214,11 +240,11 @@ body{
     margin-left: 15px;
 }
 
-#meuModal.show #criandoProjeto{
+#modalCriarProjeto.show #criandoProjeto{
     transform: translateY(0px);
 }
 
-#fecharModal{
+#fecharCriarProjeto{
     color: #868686;
     float: right;
     font-size: 28px;
@@ -229,7 +255,7 @@ body{
     transition: 0.3s;
 }
 
-#fecharModal:hover{
+#fecharCriarProjeto:hover{
     background-color: #D3D5E1;
     transition: 0.3s;
 }
@@ -265,7 +291,7 @@ body{
     transition: border-color 0.3s;
 }
 
-.campoForm input:focus {
+.campoForm input:focus, #cabecalhoProjetos input:focus {
     border-color: #43A0D6;
     outline: none;
 }
@@ -295,4 +321,31 @@ body{
 
 #btnCriar:hover {
     background-color: #002C6A;
+}
+
+#modalNotificacoes{
+    min-width: 15%;
+    max-width: 30%;
+    display: none;
+    z-index: 1;
+    position: absolute;
+    background-color: #EDF5FC;
+    border: #D3D5E1 1px solid;
+    box-shadow: 0 3px 8px #B0D3EF;
+    border-radius: 16px;
+    padding: 8px 0;
+    overflow: auto;
+    right: 8em;
+}
+
+.notificacao{
+    padding: 8px;
+    border: #D3D5E1 solid 1px;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+}
+
+.notificacao:hover{
+    cursor: default;
+    background-color: #EDF5FC;
 }
