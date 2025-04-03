@@ -25,24 +25,56 @@ document.getElementById('sino').addEventListener('click', (event) => {
     link.append(img);
 });
 
-const modal = document.getElementById("meuModal");
-const openModal = document.getElementById("criar");
-const closeModal = document.getElementById("fecharModal");
+const modalCriarProjeto = document.getElementById("modalCriarProjeto");
+const abrirCriarProjeto = document.getElementById("criar");
+const fecharCriarProjeto = document.getElementById("fecharCriarProjeto");
 
 // Abre o modal
-openModal.onclick = () => {
-    modal.classList.add("show");
+abrirCriarProjeto.onclick = () => {
+    modalCriarProjeto.classList.add("show");
 }
 
 // Fecha o modal
-closeModal.onclick = () => {
-    modal.classList.remove("show");
+fecharCriarProjeto.onclick = () => {
+    modalCriarProjeto.classList.remove("show");
 }
 
 // Fecha o modal ao clicar fora do conteúdo
 window.onclick = (event) => {
-    if (event.target == modal) {
-        modal.classList.remove("show");
+    if (event.target == modalCriarProjeto) {
+        modalCriarProjeto.classList.remove("show");
+    }
+}
+
+const modalNotificacoes = document.getElementById("modalNotificacoes");
+const abrirNotificacoes = document.getElementById("sino");
+let auxNotificacoes = 0
+
+function posicionarModal() {
+    // Calcula a posição do botão
+    const rect = abrirNotificacoes.getBoundingClientRect();
+    // Define a posição do modal
+    modalNotificacoes.style.top = `${rect.bottom + window.scrollY}px`; // Abaixo do botão
+    modalNotificacoes.style.left = `${rect.left - 100}px`;
+    modalNotificacoes.style.height = "50vh";
+}
+
+// Abre o modal
+abrirNotificacoes.onclick = () => {
+    if (auxNotificacoes == 0){
+        posicionarModal();
+        modalNotificacoes.classList.add("show");
+        auxNotificacoes = 1;
+    } else{
+        modalNotificacoes.classList.remove("show");
+        auxNotificacoes = 0;
+    }
+}
+
+// Fecha o modal ao clicar fora do conteúdo
+window.onclick = (event) => {
+    if (event.target == modalNotificacoes) {
+        modalNotificacoes.classList.remove("show");
     }
 }
 
