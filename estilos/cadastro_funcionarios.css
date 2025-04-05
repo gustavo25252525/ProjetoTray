@@ -1,0 +1,92 @@
+/* Remove a margem e o padding padrão que o navegador põe */
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: #EDF5FC;
+}
+
+#cabecalho{
+    background-color: #03222B;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 16px 0;
+    box-shadow: 0 3px 8px #B0D3EF;
+}
+
+#logo{
+    width: 5.5em;
+    height: 2.5em;
+    padding: 10px;
+}
+
+#formularioCadastro{
+    width: 350px;
+    height: 370px;
+    margin: 100px auto;
+    padding: 16px;
+    background-color: #FBFBFB;
+    border: #D3D5E1 solid 1px;
+    border-radius: 16px;
+    box-shadow: 0 3px 8px #B0D3EF;
+}
+
+h3{
+    justify-content: center;
+    display: flex;
+}
+
+#inputNomeFuncionario {
+    width: 55%;
+    height: 20px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin-left: 69px;
+    margin-right: 85px;
+    margin-top: 90px;
+    margin-bottom: 30px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+  }
+
+#inputSenhaFuncionario {
+    width: 55%;
+    height: 20px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin-left: 69px;
+    margin-right: 85px;
+    margin-top: 5px;
+    margin-bottom: 90px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+button {
+    width: 45%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    display: block;
+    color: #4f4f4f;
+    background: #b0d3ef;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 40px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: 0.2s ease-in;
+    cursor: pointer;
+  }
