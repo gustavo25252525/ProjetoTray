@@ -1,0 +1,142 @@
+/* Remove a margem e o padding padrão que o navegador põe */
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: #EDF5FC;
+}
+
+#cabecalho{
+    background-color: #03222B;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 16px 0;
+    box-shadow: 0 3px 8px #B0D3EF;
+}
+
+#logo{
+    width: 5.5em;
+    height: 2.5em;
+    padding: 10px;
+}
+
+#formularioCadastro{
+    
+    align-items: center;   
+    width: 350px;
+    height: 370px;
+    margin: 100px auto;
+    padding: 16px;
+    background-color: #FBFBFB;
+    border: #D3D5E1 solid 1px;
+    border-radius: 16px;
+    box-shadow: 0 3px 8px #B0D3EF;
+}
+
+h3{
+    justify-content: center;
+    display: flex;
+    margin-top: 25px;
+    margin-bottom:50px;
+    
+}
+
+#inputNomeCliente {
+    width: 55%;
+    height: 20px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin-left: 69px;
+    margin-right: 85px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+  }
+
+  #inputEmaiCliente {
+    width: 55%;
+    height: 20px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin-left: 69px;
+    margin-right: 85px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+  }
+
+#inputSenhaCliente {
+    width: 55%;
+    height: 20px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin-left: 69px;
+    margin-right: 85px;
+    margin-top: 5px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+
+
+button {
+    display: grid;
+    border: none;
+    margin: 20px auto;
+    
+    padding: .75rem 1.25rem;
+    border-radius: 5px;
+    color: #4f4f4f;
+    
+    font-size: 1rem;
+    
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #b0d3ef;
+        border-radius: 5px;
+        z-index: -2;
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background-color: #5bacfd;
+        transition: all .3s;
+        border-radius: 5px;
+        z-index: -1;
+      }
+    &:hover {
+        color: #4f4f4f;
+        &:before {
+        width: 100%;
+        }
+    }
+}
