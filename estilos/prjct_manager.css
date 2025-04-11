@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: #EDF5FC;
+}
+
+#cabecalho{
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 16px 0;
+    box-shadow: 0 3px 8px #B0D3EF;
+}
+
+
+#barraIcones{
+    display: flex-end;
+    gap: 12px;
+}
+
+#icones{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+#userImg{
+    width: 6%;
+}
+
+#sinoImg{
+    width: 6%;
+
+}
