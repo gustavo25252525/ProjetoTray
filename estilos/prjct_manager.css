@@ -11,7 +11,7 @@ body{
 #cabecalho{
     background-color: #FFFFFF;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
     padding: 16px 0;
@@ -36,6 +36,134 @@ body{
 }
 
 #sinoImg{
-    width: 6%;
+    width: 100%;
+    height: auto;
+}
 
+#sino {
+    width: 2vw;
+    height: 2vw;
+    transition: background-color 0.5s;
+    border-radius: 50%;
+    min-width: 45px;
+    min-height: 45px;
+}
+
+#sino:hover{
+    background-color: #43A0D6;
+    transition: background-color 0.5s;
+}
+
+#logo{
+    width: 5.5em;
+    height: 2.5em;
+    padding: 10px;
+}
+
+.timeline{
+    width: 90%;
+    height: 100px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 30px;
+    box-shadow: 0 3px 8px #B0D3EF;
+    border-radius: 16px;
+}
+
+.secao_2{
+    width: 90%;
+    height: 100px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 30px;
+    box-shadow: 0 3px 8px #B0D3EF;
+    border-radius: 16px;
+}
+
+.botoes{
+    width: 300px;
+    height: 40px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    margin: auto;
+    box-shadow: 0 3px 8px #B0D3EF;
+    border-radius: 16px;
+}
+
+.tarefas_fim{
+    width: 300px;
+    height: 40px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    margin: auto;
+    box-shadow: 0 3px 8px #B0D3EF;
+    border-radius: 16px;
+}
+
+.barrabaixo{
+    width: 90%;
+    height: 100px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 30px;
+    box-shadow: 0 3px 8px #B0D3EF;
+    border-radius: 16px;
+}
+
+.barra1{
+    width: 250px;
+    height: 50px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    margin: auto;
+
+    box-shadow: 0 3px 8px #B0D3EF;
+    border-radius: 16px;
+}
+
+.barra2{
+    width: 250px;
+    height: 50px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    margin: auto;
+    box-shadow: 0 3px 8px #B0D3EF;
+    border-radius: 16px;
+}
+
+.barra3{
+    width: 250px;
+    height: 50px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    margin: auto;
+    box-shadow: 0 3px 8px #B0D3EF;
+    border-radius: 16px;
 }
