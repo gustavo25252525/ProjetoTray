@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang en>
+<html lang="pt-BR">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilos/prjct_manager.css">
     <title>Gerenciador</title>  
+</head>
 <body>
 <main>
     <!--Cabeçalho com logo, usuário e sino de notificações-->
@@ -15,52 +17,56 @@
             <div id="icones">
                 <img id="userImg" src="assets/user.png" alt="Imagem de usuário">
                 <!--<p>(Nome do usuário)</p>-->
-
-            <a id="sino" href=""><img id="sinoImg" src="assets/sino.png" alt="sino de notificações"></a>
+                <a id="sino" href=""><img id="sinoImg" src="assets/sino.png" alt="sino de notificações"></a>
             </div>
         </div>
     </header>
     
     <div class="main">
+        <!-- Linha do tempo do projeto -->
         <div class="timeline">
             <h2>Desenvolvimento</h2>
+            <div class="etapas">
+                <div class="fase">Alinhamento</div>
+                <div class="fase">Fase I</div>
+                <div class="fase">Fase II</div>
+                <div class="fase">Fase III</div>
+                <div class="linha"></div>
+            </div>
         </div>
+
+        <!-- Seção de alteração de planejamento e tarefas finalizadas -->
         <div class="secao_2">
             <div class="botoes">
                 <h3>Alteração de planejamento</h3>
+                <div class="area-botoes">
+                    <button class="botao">Importar projeto Trello</button>
+                    <button class="botao">Editar</button>
+                </div>
             </div>
+
             <div class="tarefas_fim">
                 <h3>Tarefas finalizadas</h3>
+                <p class="tarefa">Tarefa 2 - 11 / 04 / 2025</p>
             </div>
         </div>
+
+        <!-- Barra inferior com estatísticas -->
         <div class="barrabaixo">
             <div class="barra1">
                 <h3>Tarefas</h3>
+                <p>25 / 87</p>
             </div>
             <div class="barra2">
                 <h3>Término previsto</h3>
+                <p>Dez / 2025</p>
             </div>
             <div class="barra3">
                 <h3>Sugestões</h3>
+                <p>3 / 6</p>
             </div>
         </div>
-        
-        
     </div>
-</main>
-</body>
-
-
-
-
-
-
-
-
-
-
-
-
 </main>
 </body>
 </html>
