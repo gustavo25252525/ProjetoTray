@@ -1,21 +1,18 @@
 <?php
-/*
-    // Arquivo para conectar com o banco de dados
+    $tipo_banco = "mysql";
+    $servidor   = "localhost";
+    $porta      = 3306;
+    $banco      = "ProjetoTray";
+    $usuario    = "root";
+    $senha      = "0805";
 
-    $tipo_banco = "mysql";      // Identificador do SGBD usado
-    $servidor   = "localhost";  // Endereço do servidor
-    $porta      = 3306;         // Número da porta do servidor
-    $banco      = "ProjetoTray";  // Nome do banco de dados a ser usado
-    $usuario    = "root";        // Usuário que acessará o banco
-    $senha      = "";   // Senha cadastrada na criação do BD
+    $dsn        = "$tipo_banco:host=$servidor;dbname=$banco;port=$porta;charset=utf8mb4";
 
-    // A DSN é uma string que informa à biblioteca alguns dados sobre o banco
-    $dsn        = "$tipo_banco:host=$servidor;dbname=$banco;port=$porta";
-
-    try{
+    try {
         $pdo = new PDO($dsn, $usuario, $senha);
-    }catch (PDOException $e){
-        throw new PDOException($e->getMessage(), $e->getCode());
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die("Erro na conexão: " . $e->getMessage());
     }
-*/
 ?>
