@@ -83,30 +83,82 @@ document.getElementById('busca').addEventListener('input', () => {
     var xhr = new XMLHttpRequest();
 
     if (busca.length > 0) {
-        xhr.open('GET', 'buscar.php?termo=' + encodeURIComponent(busca), true);
+        xhr.open('GET', 'busca.php?termo=' + busca, true);
     } else {
-        xhr.open('GET', 'buscar.php', true);
+        xhr.open('GET', 'busca.php', true);
     }
-    
+
+    // Definindo o onreadystatechange antes de enviar a requisição
     xhr.onreadystatechange = () => {
-        var resultadosDiv = document.getElementById('listaProjetos');
-        resultadosDiv.innerHTML = '';
+        if (xhr.readyState === 4) { // Verifica se a requisição foi concluída
+            var resultadosDiv = document.getElementById('listaProjetos');
+            resultadosDiv.innerHTML = '';
 
-        try{
-            var resultados = JSON.parse(xhr.responseText);
+            if (xhr.status === 200) { // Verifica se a requisição foi bem-sucedida
+                try {
+                    var resultados = JSON.parse(xhr.responseText);
 
-            if (resultados.length > 0) {
-                resultados.forEach(function(produto) {
-                    var div = document.createElement('div');
-                    div.textContent = produto.nome;
-                    resultadosDiv.appendChild(div);
-                });
+                    if (resultados.length > 0) {
+                        resultados.forEach(function(produto) {
+                            // Cria a div principal com a classe "degradeFundo"
+                            var divDegradeFundo = document.createElement('div');
+                            divDegradeFundo.className = 'degradeFundo';
+                        
+                            // Cria a div "infoProjeto"
+                            var divInfoProjeto = document.createElement('div');
+                            divInfoProjeto.className = 'infoProjeto';
+                        
+                            // Cria o elemento h2 para o nome do projeto
+                            var h2 = document.createElement('h2');
+                            h2.textContent = produto.nomeProj; // Acessa o nome do projeto
+                        
+                            // Cria a div "barra"
+                            var divBarra = document.createElement('div');
+                            divBarra.className = 'barra';
+                        
+                            // Cria a div "progressoBarra"
+                            var divProgressoBarra = document.createElement('div');
+                            divProgressoBarra.className = 'progressoBarra';
+                            // Aqui você pode definir a largura da barra de progresso, se necessário
+                            // divProgressoBarra.style.width = '50%'; // Exemplo de como definir a largura
+                        
+                            // Adiciona a barra de progresso à div "barra"
+                            divBarra.appendChild(divProgressoBarra);
+                        
+                            // Cria a div "maisInfoProjeto"
+                            var divMaisInfoProjeto = document.createElement('div');
+                            divMaisInfoProjeto.className = 'maisInfoProjeto';
+                        
+                            // Cria o link "maisLink"
+                            var aMaisLink = document.createElement('a');
+                            aMaisLink.className = 'maisLink';
+                            aMaisLink.href = ''; // Defina o link conforme necessário
+                            aMaisLink.textContent = '...'; // Texto do link
+                        
+                            // Adiciona o link à div "maisInfoProjeto"
+                            divMaisInfoProjeto.appendChild(aMaisLink);
+                        
+                            // Monta a estrutura
+                            divInfoProjeto.appendChild(h2);
+                            divInfoProjeto.appendChild(divBarra);
+                            divInfoProjeto.appendChild(divMaisInfoProjeto);
+                            divDegradeFundo.appendChild(divInfoProjeto);
+                        
+                            // Adiciona a div "degradeFundo" ao container de resultados
+                            resultadosDiv.appendChild(divDegradeFundo);
+                        });
+                    } else {
+                        resultadosDiv.textContent = 'Nenhum resultado encontrado.';
+                    }
+                } catch (erro) {
+                    console.error("Erro ao processar a resposta:", erro.message);
+                }
             } else {
-                resultadosDiv.textContent = 'Nenhum resultado encontrado.';
+                console.error("Erro na requisição:", xhr.status, xhr.statusText);
+                resultadosDiv.textContent = 'Erro ao buscar resultados.';
             }
-        } catch (erro) {
-            console.error("Ocorreu um erro:", erro.message);
         }
     };
+
     xhr.send();
 });

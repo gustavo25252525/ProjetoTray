@@ -6,33 +6,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    $sqlFunc = "SELECT * FROM funcionarios WHERE email = :email";
-    $stmtFunc = $pdo->prepare($sqlFunc);
-    $stmtFunc->bindParam(':email', $email);
-    $stmtFunc->execute();
+    $sql = "SELECT l.emailLogin, l.senhaLogin, f.idFunc, c.idCli, t.nomeTipo 
+            FROM login l 
+            INNER JOIN funcionario f ON l.idLogin = f.login_idLogin
+            INNER JOIN cliente c ON l.idLogin = c.login_idLogin
+            INNER JOIN tipo t ON l.tipo_idTipo = t.idTipo 
+            WHERE emailLogin = :email";
 
-    $funcionario = $stmtFunc->fetch();
 
-    if ($funcionario) {
-        if ($senha === $funcionario['senha']) {
-            $_SESSION['usuario_id'] = $funcionario['id'];
-            $_SESSION['email'] = $funcionario['email'];
-            $_SESSION['tipo'] = 'funcionario';
-            header("Location: home.php");
-            exit;
-        }
-    } else {
-        $sqlCli = "SELECT * FROM clientes WHERE email = :email";
-        $stmtCli = $pdo->prepare($sqlCli);
-        $stmtCli->bindParam(':email', $email);
-        $stmtCli->execute();
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
 
-        $cliente = $stmtCli->fetch();
+    $usuario = $stmt->fetch();
 
-        if ($cliente && $senha === $cliente['senha']) {
-            $_SESSION['usuario_id'] = $cliente['id'];
-            $_SESSION['email'] = $cliente['email'];
-            $_SESSION['tipo'] = 'cliente';
+    if ($usuario) {
+        if ($senha === $usuario['senhaLogin']) {
+            $_SESSION['email'] = $usuario['emailLogin'];
+            $_SESSION['tipo'] = $usuario['nomeTipo'];
+
+            if ($usuario['idCli'] == NULL) {
+                $_SESSION['usuario_id'] = $usuario['idFunc'];
+            } else {
+                $_SESSION['usuario_id'] = $usuario['idCli'];
+            }
             header("Location: home.php");
             exit;
         }
@@ -40,4 +37,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo "Login inválido!";
 }
-?>

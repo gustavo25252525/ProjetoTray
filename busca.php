@@ -4,21 +4,19 @@ include "conexao.php";
 $busca = isset($_GET['termo']) ? $_GET['termo'] : '';
 
 if ($busca != '') {
-    $sql = "SELECT * FROM projetos WHERE nome LIKE ? ORDER BY dataCriacao";
+    $sql = "SELECT * FROM projeto WHERE nomeProj LIKE :nome";
     $buscaParam = "%" . $busca . "%";
 } else {
-    $sql = "SELECT * FROM projetos ORDER BY dataCriacao";
+    $sql = "SELECT * FROM projeto";
 }
 
 $comando = $pdo->prepare($sql);
 if (isset($buscaParam)) {
-    $comando->bind_param("s", $buscaParam);
+    $comando->bindParam(":nome", $buscaParam);
 }
 $comando->execute();
-$resultado = $comando->get_result();
+$resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
 
-$projetos = [];
-while ($linha = $resultado->fetch_assoc()) {
-    $projetos[] = $linha;
-}
-?>
+// Retornar os resultados como JSON
+header('Content-Type: application/json');
+echo json_encode($resultado);
