@@ -6,30 +6,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $empresa = $_POST['empresa'];
     $senha = $_POST['senhaCli'];
 
-        $sql = "INSERT INTO login (emailLoginCli, registroLoginCli, senhaLoginCli) VALUES (:email, :empresa, :senha)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':empresa', $empresa);
-        $stmt->bindParam(':senha', $senha);
+    $sql = "INSERT INTO login (emailLoginCli, registroLoginCli, senhaLoginCli) VALUES (:email, :empresa, :senha)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':empresa', $empresa);
+    $stmt->bindParam(':senha', $senha);
 
+    $stmt->execute();
+
+    try {
         $stmt->execute();
-        
-        try {
-            $stmt->execute();
-            echo "Cadastrado com sucesso!";
-        } catch (PDOException $e) {
-            echo "Erro no cadastro: " . $e->getMessage();
-        }
-        
-        header("Location: login.html");
-        exit;
-        
+        echo "Cadastrado com sucesso!";
+    } catch (PDOException $e) {
+        echo "Erro no cadastro: " . $e->getMessage();
+    }
+
+    header("Location: login.html");
+    exit;
 }
 ?>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -41,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
- 
+
     <div class="main">
         <input type="checkbox" id="chk" aria-hidden="true">
         <div class="Login">
@@ -61,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
     <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> <!-- stats.js lib -->
     <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
-    <script type="text/javascript" src="../js/login.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
 </body>
 
 </html>

@@ -1,11 +1,16 @@
 <?php
 include "conexao.php";
 
-$sql = "select * from projetos";    // String com o comando SQL a ser executado
-// $comando = $pdo->query($sql);       // Montamos e deixamos o comando SQL preparado
-// $resultado = $comando->fetchAll();  // Executamos o comando $sql, nesse caso, todo o conteudo da tabela produto
+$sql = "select * from projeto";    // String com o comando SQL a ser executado
+$comando = $pdo->query($sql);       // Montamos e deixamos o comando SQL preparado
+$resultado = $comando->fetchAll();  // Executamos o comando $sql, nesse caso, todo o conteudo da tabela projeto
 
-function limitarTexto($texto, $limite) {
+$sql2 = "select * from notificacao";
+$comando2 = $pdo->query($sql2);
+$notificacoes = $comando2->fetchAll();
+
+function limitarTexto($texto, $limite)
+{
     // Verifica se o comprimento do texto é maior que o limite
     if (strlen($texto) > $limite) {
         // Trunca o texto e adiciona "..."
@@ -21,7 +26,7 @@ function limitarTexto($texto, $limite) {
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" href="estilos/home.css">
+    <link rel="stylesheet" href="styles/home.css">
 </head>
 
 <body>
@@ -62,41 +67,20 @@ function limitarTexto($texto, $limite) {
                 </div>
 
                 <div id="listaProjetos">
-                    <div class="degradeFundo">
-                        <div class="infoProjeto">
-                            <h2>Projeto 1</h2>
-                            <div class="barra">
-                                <div class="progressoBarra"></div>
-                            </div>
-                            <div class="maisInfoProjeto">
-                                <a class="maisLink" href="">...</a> <!-- editar nome, descrição e prazo, excluir projeto ou marcar como concluído -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="degradeFundo">
-                        <div class="infoProjeto">
-                            <h2>Projeto 2</h2>
-                            <div class="barra">
-                                <div class="progressoBarra"></div>
-                            </div>
-                            <div class="maisInfoProjeto">
-                                <a class="maisLink" href="">...</a>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Código em PHP que vai fazer as inclusões dos produtos quando o banco estiver pronto -->
-                    <?php /* foreach ($resultado as $projeto) { ?>
+                    <?php foreach ($resultado as $projeto) { ?>
                         <div class="degradeFundo">
                             <div class="infoProjeto">
-                                <h2><?= $projeto["nome"] ?></h2>
-                                <p><?= $projeto["descricao"] ?></p>
-                                <p><?= $projeto["prazo"] ?></p>
-                                <a class="maisInfoProjeto">...</a> // editar nome, descrição e prazo, excluir projeto ou marcar como concluído 
+                                <h2><?= $projeto["nomeProj"] ?></h2>
+                                <div class="barra">
+                                    <div class="progressoBarra"></div>
+                                </div>
+                                <div class="maisInfoProjeto">
+                                    <a class="maisLink" href="">...</a> <!-- editar nome, descrição e prazo, excluir projeto ou marcar como concluído -->
+                                </div> 
                             </div>
                         </div>
-                    <?php } */ ?>
-
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -128,36 +112,14 @@ function limitarTexto($texto, $limite) {
 
     <div id="modalNotificacoes">
         <div id="notificacoes">
-            <div class="notificacao">
-                <h3>Assunto</h3>
-                <h4>Projeto referente</h4>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi expedita, ad delectus quis, nemo debitis temporibus dicta nesciunt odit error fugiat. Excepturi ut minima delectus. Consequuntur numquam harum voluptate ex!</p>
-            </div>
-            <div class="notificacao">
-                <h3>Assunto</h3>
-                <h4>Projeto referente</h4>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi expedita, ad delectus quis, nemo debitis temporibus dicta nesciunt odit error fugiat. Excepturi ut minima delectus. Consequuntur numquam harum voluptate ex!</p>
-            </div>
-            <div class="notificacao">
-                <h3>Assunto</h3>
-                <h4>Projeto referente</h4>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi expedita, ad delectus quis, nemo debitis temporibus dicta nesciunt odit error fugiat. Excepturi ut minima delectus. Consequuntur numquam harum voluptate ex!</p>
-            </div>
-            <div class="notificacao">
-                <h3>Assunto</h3>
-                <h4>Projeto referente</h4>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi expedita, ad delectus quis, nemo debitis temporibus dicta nesciunt odit error fugiat. Excepturi ut minima delectus. Consequuntur numquam harum voluptate ex!</p>
-            </div>
-
             <!-- Código em PHP para puxar as notificações do banco -->
-            <?php /* foreach ($notificacoes as $notificacao) { ?>
+            <?php foreach ($notificacoes as $notificacao) { ?>
                 <div class="notificacao">
-                    <h3><?= $notificacao["nome"] ?></h3>
-                    <h4><?= $notificacao["projeto"] ?></h4>
-                    <p><?= limitarTexto($notificacao["texto"], 80) ?></p>
+                    <h3><?= $notificacao["assuntoNot"] ?></h3>
+                    <p><?= limitarTexto($notificacao["conteudoNot"], 80) ?></p>
                 </div>
-            <?php } */ ?>
-        </div>
+            <?php } ?>
+        </div>    
     </div>
 
     <script type="text/javascript" src="js/home.js"></script>
