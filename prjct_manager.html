@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/prjct_manager.css">
-    <title>Gerenciador</title>  
+    <title>Gerenciador</title>
 </head>
 <body>
 <main>
@@ -16,7 +16,6 @@
         <div id="barraIcones">
             <div id="icones">
                 <img id="userImg" src="assets/user.png" alt="Imagem de usuário">
-                <!--<p>(Nome do usuário)</p>-->
                 <a id="sino" href=""><img id="sinoImg" src="assets/sino.png" alt="sino de notificações"></a>
             </div>
         </div>
@@ -27,11 +26,10 @@
         <div class="timeline">
             <h2>Desenvolvimento</h2>
             <div class="etapas">
-                <div class="fase"><button>Alinhamento</button></div>
-                <div class="fase"><button>Fase I</button></div>
-                <div class="fase"><button>Fase II</button></div>
-                <div class="fase"><button>Fase III</button></div>
-
+                <div class="fase">Alinhamento</div>
+                <div class="fase">Fase I</div>
+                <div class="fase">Fase II</div>
+                <div class="fase">Fase III</div>
             </div>
         </div>
 
@@ -53,21 +51,40 @@
 
         <!-- Barra inferior com estatísticas -->
         <div class="barrabaixo">
-            <div class="barra">
+            <div class="barra1">
                 <h3>Tarefas</h3>
                 <p>25 / 87</p>
             </div>
-            <div class="barra">
+            <div class="barra2">
                 <h3>Término previsto</h3>
                 <p>Dez / 2025</p>
             </div>
-            <div class="barra">
+            <div class="barra3">
                 <h3>Sugestões</h3>
                 <p>3 / 6</p>
             </div>
         </div>
+        
+        <!-- Pop-up de detalhes da fase -->
+        <div id="popup-fase" class="popup-fase">
+            <div class="popup-conteudo">
+                <span class="fechar-popup">&times;</span>
+                <h2 id="nome-fase-popup">Nome da Fase</h2>
+                
+                <div class="barra-progresso">
+                    <div class="progresso"></div>
+                </div>
+                
+                <div class="detalhes-fase">
+                    <p>Tarefas completas: <span id="completas-popup">0</span>/<span id="total-popup">0</span></p>
+                    <p>Status: <span id="status-popup">Em andamento</span></p>
+                    <p>Última atualização: <span id="atualizacao-popup">Hoje</span></p>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
+
 <script src="js/prjct_manager.js"></script>
 </body>
 </html>
