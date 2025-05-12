@@ -49,3 +49,10 @@ document.getElementById("popup-fase").addEventListener("click", function (e) {
     this.style.display = "none";
   }
 });
+
+const lasttasksOpn = document.querySelector('#lasttasks_popup');
+const lasttasksDialog = document.querySelector('#lasttasks_dialog');
+const lasttasksClose = document.querySelector('#lasttasks_close');
+
+lasttasksOpn.addEventListener('click', () => lasttasksDialog.showModal());
+lasttasksClose.addEventListener('click', () => lasttasksDialog.close());
