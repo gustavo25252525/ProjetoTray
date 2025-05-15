@@ -7,3 +7,10 @@ Cadastro de Funcionário:
 
 Cadastro de Cliente:
 1 - Adaptar o cadastro aos dados pedidos no banco
+
+Página do Projeto:
+1 - Mudar a localização do "Alteração de Planejamento", talvez uma seção separada mais "escondida"
+2 - Remover "Tarefas finalizadas" e adicionar um acesso ao histórico de mudanças
+3 - Fazer uma Parte isolada para as sugestões, meio que um quadro para visualizar, enviar feedback se for aceito ou não, coisas do tipo
+4 - Ter uma barra de navegação que pode ir a Linha do Tempo, Alterar Planejamento, Histórico e Sugestões
+5 - Talvez não ter as abas de cada fase, mas ter a linha do tempo e quando apertar na fase, as informações aparecerem onde hoje ficam as caixas de "Alteração de Planejamento" e as outras
