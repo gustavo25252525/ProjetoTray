@@ -48,7 +48,7 @@ body{
 
 #sino {
     width: 2vw;
-    height: 2vw;
+    height: 2vh;
     transition: background-color 0.5s;
     border-radius: 50%;
     min-width: 45px;

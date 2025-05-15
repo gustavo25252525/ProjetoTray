@@ -39,14 +39,22 @@ document.querySelectorAll(".fase").forEach((fase) => {
 });
 
 // Fechar pop-up
-document.querySelector(".fechar-popup").addEventListener("click", function () {
-  document.getElementById("popup-fase").style.display = "none";
+let fecharPopUps = document.querySelectorAll(".fechar-popup"); // Pega todas as ocorrencias da classe
+
+fecharPopUps.forEach((xis) => {
+  xis.addEventListener("click", () => { // '() =>' é a msm coisa de function(), mas quando só vai usar assim que não vai declarar a funcão pra usar outras vezes, é melhor deixar do jeito que deixei
+    const popupId = xis.dataset.popupId;
+    const popupParaFechar = document.getElementById(popupId);
+    if (popupParaFechar) {
+      popupParaFechar.style.display = "none";
+    }
+  });
 });
 
 // Fechar pop-up ao clicar fora do conteúdo
-document.getElementById("popup-fase").addEventListener("click", function (e) {
-  if (e.target === this) {
-    this.style.display = "none";
+document.getElementById("popup-fase").addEventListener("click", (e) => {
+  if (e.target === document.getElementById("popup-fase")) {
+    document.getElementById("popup-fase").style.display = "none";
   }
 });
 
