@@ -163,7 +163,7 @@ main {
     top: 50%;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 10px;
     background: linear-gradient(90deg, #43A0D6 0%, #43A0D6 80%, #e0e0e0 80%, #e0e0e0 100%);
     z-index: 0;
     border-radius: 3px;
@@ -180,6 +180,7 @@ main {
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-bottom: 70px;
 }
 
 .fase:hover {
@@ -195,7 +196,7 @@ main {
     transform: translateX(-50%);
     width: 12px;
     height: 12px;
-    background-color: #43A0D6;
+    background-color: #316c8f;
     border-radius: 50%;
 }
 
