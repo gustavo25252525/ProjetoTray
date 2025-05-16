@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <img src="src/logotray.png" class="logo" alt="Logo">
+    <img src="assets/logotray.png" class="logo" alt="Logo">
     <nav class="menu-lateral">
         <div class="btn-expandir">
             <i class="bi bi-list" id="bnt-exp"></i>
