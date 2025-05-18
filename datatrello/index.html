@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Exportar Cards Concluídos</title>
+</head>
+<body>
+  <h1>Exportar Cards Concluídos do Trello</h1>
+  <button onclick="exportarCards()">Exportar para JSON</button>
+
+  <script>
+    async function exportarCards() {
+      try {
+        const response = await fetch('datatrello.json');
+        const data = await response.json();
+
+        const cardsMap = {};
+
+        data.actions.forEach(action => {
+          // 1. Cartões concluídos
+          if (
+            action.type === 'updateCard' &&
+            action.data.card &&
+            action.data.card.dueComplete === true
+          ) {
+            const cardId = action.data.card.id;
+            if (!cardsMap[cardId]) {
+              cardsMap[cardId] = {
+                id: cardId,
+                nome: action.data.card.name || '',
+                dataCriacao: action.date || null,
+                dataEntrega: action.data.card.due || null,
+                membros: []
+              };
+            }
+          }
+
+          // 2. Membros adicionados ao card
+          if (
+            action.type === 'addMemberToCard' &&
+            action.data.card &&
+            cardsMap[action.data.card.id]
+          ) {
+            const member = action.data.member;
+            if (
+              member &&
+              member.fullName &&
+              !cardsMap[action.data.card.id].membros.includes(member.fullName)
+            ) {
+              cardsMap[action.data.card.id].membros.push(member.fullName);
+            }
+          }
+        });
+
+        const resultadoFinal = Object.values(cardsMap);
+        const blob = new Blob([JSON.stringify(resultadoFinal, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        // Cria link e simula clique para download
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'cards-concluidos.json';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error('Erro ao processar o JSON:', error);
+      }
+    }
+  </script>
+</body>
+</html>
