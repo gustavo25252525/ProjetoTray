@@ -8,15 +8,15 @@ const fasesData = {
 
 // Configurar pop-up para cada fase
 document.querySelectorAll(".fase").forEach((fase) => {
-  fase.addEventListener("click", function () {
-    const nomeFase = this.textContent.trim();
+  fase.addEventListener("click", () => {
+    const nomeFase = fase.textContent;
     const dados = fasesData[nomeFase];
 
     // Atualizar o pop-up com os dados da fase
-    document.getElementById("nome-fase-popup").textContent = nomeFase;
-    document.getElementById("completas-popup").textContent = dados.completas;
-    document.getElementById("total-popup").textContent = dados.total;
-    document.getElementById("atualizacao-popup").textContent =
+    document.getElementById("nome-fase").textContent = nomeFase;
+    document.getElementById("completas").textContent = dados.completas;
+    document.getElementById("total").textContent = dados.total;
+    document.getElementById("atualizacao").textContent =
       dados.atualizacao;
 
     // Calcular e atualizar a barra de progresso
@@ -24,7 +24,7 @@ document.querySelectorAll(".fase").forEach((fase) => {
     document.querySelector(".progresso").style.width = percentual + "%";
 
     // Atualizar status baseado no progresso
-    const statusElement = document.getElementById("status-popup");
+    const statusElement = document.getElementById("status");
     if (percentual === 0) {
       statusElement.textContent = "Não iniciada";
     } else if (percentual === 100) {
@@ -32,35 +32,7 @@ document.querySelectorAll(".fase").forEach((fase) => {
     } else {
       statusElement.textContent = "Em andamento";
     }
-
-    // Mostrar o pop-up
-    document.getElementById("popup-fase").style.display = "flex";
   });
 });
 
-// Fechar pop-up
-let fecharPopUps = document.querySelectorAll(".fechar-popup"); // Pega todas as ocorrencias da classe
 
-fecharPopUps.forEach((xis) => {
-  xis.addEventListener("click", () => { // '() =>' é a msm coisa de function(), mas quando só vai usar assim que não vai declarar a funcão pra usar outras vezes, é melhor deixar do jeito que deixei
-    const popupId = xis.dataset.popupId;
-    const popupParaFechar = document.getElementById(popupId);
-    if (popupParaFechar) {
-      popupParaFechar.style.display = "none";
-    }
-  });
-});
-
-// Fechar pop-up ao clicar fora do conteúdo
-document.getElementById("popup-fase").addEventListener("click", (e) => {
-  if (e.target === document.getElementById("popup-fase")) {
-    document.getElementById("popup-fase").style.display = "none";
-  }
-});
-
-const lasttasksOpn = document.querySelector('#lasttasks_popup');
-const lasttasksDialog = document.querySelector('#lasttasks_dialog');
-const lasttasksClose = document.querySelector('#lasttasks_close');
-
-lasttasksOpn.addEventListener('click', () => lasttasksDialog.showModal());
-lasttasksClose.addEventListener('click', () => lasttasksDialog.close());

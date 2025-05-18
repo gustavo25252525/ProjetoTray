@@ -9,19 +9,19 @@
 </head>
 
 <body>
+    <!--Cabeçalho com logo, usuário e sino de notificações-->
+    <header id="cabecalho">
+        <img id="logo" src="assets/logo.png" alt="logo da Tray">
+
+        <!-- "Barra" onde fica o indicador de usuário e o sino de notificações -->
+        <div id="icones">
+            <img id="userImg" src="assets/user.png" alt="Imagem de usuário">
+            <a id="sino" href="#"><img src="assets/sino.png" alt="sino de notificações"></a>
+            <!-- Quando quer que o a leve a lugar nenhum, deixa um # no href -->
+        </div>
+    </header>
+
     <main>
-        <!--Cabeçalho com logo, usuário e sino de notificações-->
-        <header id="cabecalho">
-            <img id="logo" src="assets/logo.png" alt="logo da Tray">
-
-            <!-- "Barra" onde fica o indicador de usuário e o sino de notificações -->
-            <div id="icones">
-                <img id="userImg" src="assets/user.png" alt="Imagem de usuário">
-                <a id="sino" href="#"><img src="assets/sino.png" alt="sino de notificações"></a>
-                <!-- Quando quer que o a leve a lugar nenhum, deixa um # no href -->
-            </div>
-        </header>
-
         <div class="main">
             <!-- Linha do tempo do projeto -->
             <div class="timeline">
@@ -34,60 +34,20 @@
                 </div>
             </div>
 
-            <!-- Seção de alteração de planejamento e tarefas finalizadas -->
-            <div class="secao_2">
-                <div class="botoes">
-                    <h3>Alteração de planejamento</h3>
-                    <div class="area-botoes">
-                        <button class="botao">Importar projeto Trello</button>
-                        <button class="botao">Editar</button>
-                    </div>
+            <div class="detalhes_fase">
+                <h2 id="nome-fase">Nome da Fase</h2>
+
+                <div class="barra-progresso">
+                    <div class="progresso"></div>
                 </div>
 
-                <div class="tarefas_fim">
-                    <h3>Tarefas finalizadas</h3>
-                    <p class="tarefa">Tarefa 2 - 11 / 04 / 2025</p>
-                </div>
+                <p>Tarefas completas: <span id="completas">0</span>/<span id="total">0</span></p>
+                <p>Status: <span id="status">Em andamento</span></p>
+                <p>Última atualização: <span id="atualizacao">Hoje</span></p>
             </div>
 
-            <!-- Barra inferior com estatísticas -->
-            <div class="estatisticas">
-                <div class="item1">
-                    <button id="lasttasks_popup">
-                        <h3>Tarefas</h3>
-                    </button>
-                    <dialog id="lasttasks_dialog">
-                        <h2>Últimas tarefas feitas blá blá blá tem q add ainda</h2>
-                        <button id="lasttasks_close"><span class="fechar-popup">&times;</span></button>
-                    </dialog>
-                    <p>25 / 87</p>
-                </div>
-                <div class="item2">
-                    <h3>Término previsto</h3>
-                    <p>Dez / 2025</p>
-                </div>
-                <div class="item3">
-                    <h3>Sugestões</h3>
-                    <p>3 / 6</p>
-                </div>
-            </div>
-
-            <!-- Pop-up de detalhes da fase -->
-            <div id="popup-fase" class="popup-fase">
-                <div class="popup-conteudo">
-                    <span class="fechar-popup">&times;</span>
-                    <h2 id="nome-fase-popup">Nome da Fase</h2>
-
-                    <div class="barra-progresso">
-                        <div class="progresso"></div>
-                    </div>
-
-                    <div class="detalhes-fase">
-                        <p>Tarefas completas: <span id="completas-popup">0</span>/<span id="total-popup">0</span></p>
-                        <p>Status: <span id="status-popup">Em andamento</span></p>
-                        <p>Última atualização: <span id="atualizacao-popup">Hoje</span></p>
-                    </div>
-                </div>
+            <div class="tarefas">
+                
             </div>
         </div>
     </main>
