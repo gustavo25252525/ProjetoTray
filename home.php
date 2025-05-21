@@ -67,17 +67,19 @@ function limitarTexto($texto, $limite)
                 </div>
 
                 <div id="listaProjetos">
-                    <!-- Código em PHP que vai fazer as inclusões dos produtos quando o banco estiver pronto -->
+                    <!-- Código em PHP que vai fazer as inclusões dos produtos -->
                     <?php foreach ($resultado as $projeto) { ?>
                         <div class="degradeFundo">
                             <div class="infoProjeto">
-                                <h2><?= $projeto["nomeProj"] ?></h2>
+                                <a href="abreProjeto.php?id=<?= $projeto["idProj"] ?>">
+                                    <h2><?= $projeto["nomeProj"] ?></h2>
+                                </a>
                                 <div class="barra">
                                     <div class="progressoBarra"></div>
                                 </div>
                                 <div class="maisInfoProjeto">
-                                    <a class="maisLink" href="">...</a> <!-- editar nome, descrição e prazo, excluir projeto ou marcar como concluído -->
-                                </div> 
+                                    <a class="maisLink" href="#">...</a> <!-- editar nome, descrição e prazo, excluir projeto ou marcar como concluído -->
+                                </div>
                             </div>
                         </div>
                     <?php } ?>
@@ -119,7 +121,7 @@ function limitarTexto($texto, $limite)
                     <p><?= limitarTexto($notificacao["conteudoNot"], 80) ?></p>
                 </div>
             <?php } ?>
-        </div>    
+        </div>
     </div>
 
     <script type="text/javascript" src="js/home.js"></script>

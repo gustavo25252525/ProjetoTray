@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS ProjetoTray.coluna_has_projeto_has_tarefa (
   coluna_idCol INT NOT NULL,
   projeto_idProj INT NOT NULL,
   tarefa_idTarefa INT NOT NULL,
+  estado INT NOT NULL
   PRIMARY KEY (coluna_idCol, projeto_idProj, tarefa_idTarefa),
   INDEX fk_coluna_has_projeto_projeto1_idx (projeto_idProj ASC) VISIBLE,
   INDEX fk_coluna_has_projeto_coluna1_idx (coluna_idCol ASC) VISIBLE,
@@ -236,10 +237,10 @@ INSERT INTO tarefa (nomeTarefa, descTarefa) VALUES
 ("Fazer classes", "Implementar as classes previstas");
 
 INSERT INTO coluna_has_projeto_has_tarefa (coluna_idCol, projeto_idProj, tarefa_idTarefa) VALUES
-(1, 1, 1),
-(1, 2, 1),
-(2, 1, 2),
-(2, 2, 2);
+(1, 1, 1, 1),
+(1, 2, 1, 0),
+(2, 1, 2, 0),
+(2, 2, 2, 1);
 
 INSERT INTO destinatario (notificacao_idNot, login_idLogin) VALUES
 (1, 1),

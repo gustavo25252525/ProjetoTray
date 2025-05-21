@@ -120,6 +120,11 @@ body{
     border-radius: 16px;
 }
 
+.degradeFundo a {
+    color: white;
+    text-decoration: none;
+}
+
 .infoProjeto {
     display: flex;
     justify-content: space-between;

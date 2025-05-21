@@ -99,10 +99,13 @@ document.getElementById('busca').addEventListener('input', () => {
                     var resultados = JSON.parse(xhr.responseText);
 
                     if (resultados.length > 0) {
-                        resultados.forEach(function(produto) {
+                        resultados.forEach((produto) => {
                             // Cria a div principal com a classe "degradeFundo"
                             var divDegradeFundo = document.createElement('div');
                             divDegradeFundo.className = 'degradeFundo';
+
+                            var linkProjeto = document.createElement('a');
+                            linkProjeto.href = "abreProjeto.php?id=" + produto.idProj;
                         
                             // Cria a div "infoProjeto"
                             var divInfoProjeto = document.createElement('div');
@@ -132,14 +135,16 @@ document.getElementById('busca').addEventListener('input', () => {
                             // Cria o link "maisLink"
                             var aMaisLink = document.createElement('a');
                             aMaisLink.className = 'maisLink';
-                            aMaisLink.href = ''; // Defina o link conforme necessário
-                            aMaisLink.textContent = '...'; // Texto do link
+                            aMaisLink.href = '#';
+                            aMaisLink.textContent = '...';
                         
                             // Adiciona o link à div "maisInfoProjeto"
                             divMaisInfoProjeto.appendChild(aMaisLink);
                         
                             // Monta a estrutura
-                            divInfoProjeto.appendChild(h2);
+                            linkProjeto.appendChild(h2);
+
+                            divInfoProjeto.appendChild(linkProjeto);
                             divInfoProjeto.appendChild(divBarra);
                             divInfoProjeto.appendChild(divMaisInfoProjeto);
                             divDegradeFundo.appendChild(divInfoProjeto);

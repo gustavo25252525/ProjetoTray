@@ -1,9 +1,23 @@
+<?php
+session_start();
+
+include "conexao.php";
+
+$sql = "select * from projeto where idProj = " . $_SESSION["idProj"];
+$comando = $pdo->query($sql);
+$resultado = $comando->fetch();
+
+$sql2 = "select * from notificacao";
+$comando2 = $pdo->query($sql2);
+$notificacoes = $comando2->fetchAll();
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/prjct_manager.css">
     <title>Gerenciador</title>
 </head>
@@ -13,6 +27,7 @@
     <header id="cabecalho">
         <img id="logo" src="assets/logo.png" alt="logo da Tray">
 
+        <h1><?= $resultado["nomeProj"] ?></h1>
         <!-- "Barra" onde fica o indicador de usuário e o sino de notificações -->
         <div id="icones">
             <img id="userImg" src="assets/user.png" alt="Imagem de usuário">
