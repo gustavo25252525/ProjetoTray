@@ -113,3 +113,15 @@ ul li.item-menu a .icon > i {
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
 }
+
+
+.table {
+    position: absolute;
+    top: 50%;
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Centraliza verticalmente */
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
