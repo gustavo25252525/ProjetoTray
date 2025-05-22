@@ -270,7 +270,7 @@ main, header {
     justify-content: center;
 }
 
-#nomeTarefa, #descTarefa {
+#nomeTarefa, #descTarefa, #estadoTarefa {
     width: 90%;
     margin: 8px 0;
     padding: 6px;
@@ -279,9 +279,14 @@ main, header {
     font-size: medium;
 }
 
+#estadoTarefa {
+    display: none;
+}
+
 #btn_adiciona_tarefa {
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
 }
 
 #btn_adiciona_tarefa button {
