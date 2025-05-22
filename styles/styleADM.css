@@ -15,9 +15,10 @@
     z-index: 1000; 
 }
 body{
-    height: 90vh;
-    width: 90vh;
-    background: #ECF5FB;
+display: flex;
+      justify-content: center; 
+      align-items: center;     
+      background-color: #ECF5FB; 
 }
 
 nav.menu-lateral{
@@ -117,4 +118,11 @@ ul li.item-menu a .icon > i {
 .main-conteudo {
     margin-left: 250px;
     padding: 20px;
+}
+
+.aba-conteudo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
