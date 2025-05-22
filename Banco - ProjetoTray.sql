@@ -141,28 +141,41 @@ CREATE TABLE IF NOT EXISTS ProjetoTray.tarefa (
   PRIMARY KEY (idTarefa));
 
 -- -----------------------------------------------------
--- Tabela entre coluna, projeto e tarefa (pois uma coluna (que pode estar em vários projetos) pode ter várias tarefas e um tarefa (que pode estar em várias colunas), com o mesmo nome, pode estar em várias colunas)
+-- Tabela entre projeto e coluna
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS ProjetoTray.coluna_has_projeto_has_tarefa (
-  coluna_idCol INT NOT NULL,
+CREATE TABLE IF NOT EXISTS ProjetoTray.projeto_has_coluna (
   projeto_idProj INT NOT NULL,
-  tarefa_idTarefa INT NOT NULL,
-  estado INT NOT NULL
-  PRIMARY KEY (coluna_idCol, projeto_idProj, tarefa_idTarefa),
-  INDEX fk_coluna_has_projeto_projeto1_idx (projeto_idProj ASC) VISIBLE,
-  INDEX fk_coluna_has_projeto_coluna1_idx (coluna_idCol ASC) VISIBLE,
-  INDEX fk_coluna_has_projeto_tarefa1_idx (tarefa_idTarefa ASC) VISIBLE,
-  CONSTRAINT fk_coluna_has_projeto_coluna1
-    FOREIGN KEY (coluna_idCol)
-    REFERENCES ProjetoTray.coluna (idCol)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT fk_coluna_has_projeto_projeto1
+  coluna_idCol INT NOT NULL,
+  PRIMARY KEY (projeto_idProj, coluna_idCol),
+  INDEX fk_projeto_has_coluna_coluna1_idx (coluna_idCol ASC) VISIBLE,
+  INDEX fk_projeto_has_coluna_projeto1_idx (projeto_idProj ASC) VISIBLE,
+  CONSTRAINT fk_projeto_has_coluna_projeto1
     FOREIGN KEY (projeto_idProj)
     REFERENCES ProjetoTray.projeto (idProj)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT fk_coluna_has_projeto_tarefa1
+  CONSTRAINT fk_projeto_has_coluna_coluna1
+    FOREIGN KEY (coluna_idCol)
+    REFERENCES ProjetoTray.coluna (idCol)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+-- -----------------------------------------------------
+-- Tabela entre coluna e tarefa
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ProjetoTray.coluna_has_tarefa (
+  coluna_idCol INT NOT NULL,
+  tarefa_idTarefa INT NOT NULL,
+  estado_tarefa INT NOT NULL,
+  PRIMARY KEY (coluna_idCol, tarefa_idTarefa),
+  INDEX fk_coluna_has_tarefa_tarefa1_idx (tarefa_idTarefa ASC) VISIBLE,
+  INDEX fk_coluna_has_tarefa_coluna1_idx (coluna_idCol ASC) VISIBLE,
+  CONSTRAINT fk_coluna_has_tarefa_coluna1
+    FOREIGN KEY (coluna_idCol)
+    REFERENCES ProjetoTray.coluna (idCol)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_coluna_has_tarefa_tarefa1
     FOREIGN KEY (tarefa_idTarefa)
     REFERENCES ProjetoTray.tarefa (idTarefa)
     ON DELETE NO ACTION
@@ -187,7 +200,6 @@ CREATE TABLE IF NOT EXISTS ProjetoTray.destinatario (
     REFERENCES ProjetoTray.login (idLogin)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
 
 
 
@@ -236,11 +248,17 @@ INSERT INTO tarefa (nomeTarefa, descTarefa) VALUES
 ("Diagramação", "Fazer diagramas para o desenvolvimento do site"),
 ("Fazer classes", "Implementar as classes previstas");
 
-INSERT INTO coluna_has_projeto_has_tarefa (coluna_idCol, projeto_idProj, tarefa_idTarefa) VALUES
-(1, 1, 1, 1),
-(1, 2, 1, 0),
-(2, 1, 2, 0),
-(2, 2, 2, 1);
+INSERT INTO projeto_has_coluna (projeto_idProj, coluna_idCol) VALUES
+(1, 1),
+(1, 2),
+(2, 1),
+(2, 2);
+
+INSERT INTO coluna_has_tarefa (coluna_idCol, tarefa_idTarefa, estado_tarefa) VALUES
+(1, 1, 1),
+(1, 2, 0),
+(2, 1, 2),
+(2, 2, 0);
 
 INSERT INTO destinatario (notificacao_idNot, login_idLogin) VALUES
 (1, 1),
