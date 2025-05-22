@@ -1,0 +1,27 @@
+
+ul.listagem {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.listagem li {
+    background-color: #ffffff;
+    margin-bottom: 15px;
+    padding: 15px 20px;
+    border-left: 6px solid #43A0D6;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: "Montserrat", sans-serif;
+}
+
+ul.listagem li .nome {
+    font-weight: 600;
+    font-size: 18px;
+    color: #002C6A;
+}
+
+ul.listagem li .email {
+    font-size: 14px;
+    color: #555;
+}
