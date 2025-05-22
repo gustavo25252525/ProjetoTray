@@ -1,165 +1,227 @@
 document.addEventListener('DOMContentLoaded', () => {
-  preparandoFases()
-
-  // Seleciona a primeira fase automaticamente
-  const primeiraFase = document.querySelector('.fase');
-  if (primeiraFase) {
-    primeiraFase.click();
-  }
+  initializePhases();
 });
 
+function initializePhases() {
+  preparandoFases();
+
+  document.querySelector('.fase').click();
+}
+
 function preparandoFases() {
-  document.querySelectorAll('.fase').forEach(fase => {
-    fase.addEventListener('click', function () {
-      document.querySelectorAll('.fase').forEach(f => f.classList.remove('selecionada'));
-      this.classList.add('selecionada');
+  const phases = document.querySelectorAll('.fase');
 
-      const idColuna = parseInt(this.dataset.id);
-
-      document.getElementById('coluna_idCol').value = idColuna;
-      atualizarDetalhesFase(idColuna);
-      listarTarefasDaColuna(idColuna);
-    });
+  phases.forEach(fase => {
+    fase.addEventListener('click', mudaFaseSelecionada);
   });
 }
 
+function mudaFaseSelecionada() {
+  document.querySelectorAll('.fase').forEach(f => f.classList.remove('selecionada'));
 
+  this.classList.add('selecionada');
 
-// Função para atualizar os detalhes
+  const idColuna = parseInt(this.dataset.id);
+  document.getElementById('coluna_idCol').value = idColuna;
+
+  atualizarDetalhesFase(idColuna);
+  listarTarefasDaColuna(idColuna);
+}
+
 function atualizarDetalhesFase(idColuna) {
-  const nomeFase = document.getElementById('nome-fase');
-  const tarefasCompletas = document.getElementById('completas');
-  const totalTarefas = document.getElementById('total');
-  const statusColuna = document.getElementById('status');
-  const barraProgresso = document.querySelector('.progresso');
+  const elements = {
+    nomeFase: document.getElementById('nome-fase'),
+    tarefasCompletas: document.getElementById('completas'),
+    totalTarefas: document.getElementById('total'),
+    statusColuna: document.getElementById('status'),
+    barraProgresso: document.querySelector('.progresso')
+  };
 
-  // Encontra a coluna selecionada
   const colunaSelecionada = colunasData.find(col => col.idCol === idColuna);
-
   if (!colunaSelecionada) return;
 
-  // Atualiza o nome da fase
-  nomeFase.textContent = colunaSelecionada.nomeCol;
+  elements.nomeFase.textContent = colunaSelecionada.nomeCol;
 
-  // Filtra tarefas desta coluna
   const tarefasDaFase = tarefasData.filter(tarefa => tarefa.coluna_idCol === idColuna);
   const totalTarefasDaFase = tarefasDaFase.length;
   const tarefasConcluidas = tarefasDaFase.filter(t => t.estado_tarefa === 2).length;
 
-  // Atualiza os números
-  tarefasCompletas.textContent = tarefasConcluidas;
-  totalTarefas.textContent = totalTarefasDaFase;
+  elements.tarefasCompletas.textContent = tarefasConcluidas;
+  elements.totalTarefas.textContent = totalTarefasDaFase;
 
-  // Atualiza a barra de progresso
-  const percentual = totalTarefasDaFase > 0 ? Math.round((tarefasConcluidas / totalTarefasDaFase) * 100) : 0;
-  barraProgresso.style.width = `${percentual}%`;
+  const percentual = totalTarefasDaFase > 0
+    ? Math.round((tarefasConcluidas / totalTarefasDaFase) * 100)
+    : 0;
 
-  // Atualiza o status
-  if (percentual === 100) {
-    statusColuna.textContent = 'Concluído';
-    statusColuna.style.color = '#4CAF50';
-  } else if (percentual > 0) {
-    statusColuna.textContent = 'Em andamento';
-    statusColuna.style.color = '#2196F3';
+  elements.barraProgresso.style.width = `${percentual}%`;
+
+  updateStatusText(elements.statusColuna, percentual);
+}
+
+function updateStatusText(element, percentage) {
+  if (percentage === 100) {
+    element.textContent = 'Concluído';
+    element.style.color = '#4CAF50';
+  } else if (percentage > 0) {
+    element.textContent = 'Em andamento';
+    element.style.color = '#2196F3';
   } else {
-    statusColuna.textContent = 'Não iniciado';
-    statusColuna.style.color = '#9E9E9E';
+    element.textContent = 'Não iniciado';
+    element.style.color = '#9E9E9E';
   }
 }
 
-// Função para listar tarefas da coluna específica
 function listarTarefasDaColuna(idColuna) {
   const containerTarefas = document.getElementById('tarefas');
   const tarefasDaColuna = tarefasData.filter(tarefa => tarefa.coluna_idCol === idColuna);
-  containerTarefas.innerHTML = '';
 
-  if (tarefasDaColuna.length === 0) {
-    containerTarefas.innerHTML = '<p class="sem-tarefas">Nenhuma tarefa nesta fase.</p>';
-    return;
-  }
+  containerTarefas.innerHTML = tarefasDaColuna.length === 0
+    ? '<p class="sem-tarefas">Nenhuma tarefa nesta fase.</p>'
+    : tarefasDaColuna.map(createTaskElement).join('');
 
-  tarefasDaColuna.forEach(tarefa => {
-    const tarefaElement = document.createElement('div');
-    tarefaElement.className = `tarefa-item estado-${tarefa.estado_tarefa}`;
-    tarefaElement.dataset.id = tarefa.idTarefa; // Adicione isso se suas tarefas tiverem ID
-    tarefaElement.innerHTML = `
-            <div class="tarefa-conteudo">
-                <div>
-                    <h3>${tarefa.nomeTarefa}</h3>
-                    <p>${tarefa.descTarefa || 'Sem descrição'}</p>
-                </div>
-                <div class="tarefa-acoes">
-                    <button class="btn-editar" data-id="${tarefa.idTarefa}">
-                        Editar
-                    </button>
-                    <button class="btn-excluir" data-id="${tarefa.idTarefa}">
-                        Excluir
-                    </button>
-                </div>
-            </div>
-            <div class="tarefa-status">
-                <span class="status-badge">${getStatusText(tarefa.estado_tarefa)}</span>
-            </div>
-        `;
-    containerTarefas.appendChild(tarefaElement);
-  });
+  addTaskEventListeners(idColuna);
+}
 
-  // Adiciona eventos aos botões
+function createTaskElement(tarefa) {
+  return `
+    <div class="tarefa-item estado-${tarefa.estado_tarefa}" data-id="${tarefa.idTarefa}">
+      <div class="tarefa-conteudo">
+        <div>
+          <h3>${tarefa.nomeTarefa}</h3>
+          <p>${tarefa.descTarefa || 'Sem descrição'}</p>
+        </div>
+        <div class="tarefa-acoes">
+          <button class="btn-editar" data-id="${tarefa.idTarefa}">Editar</button>
+          <button class="btn-excluir" data-id="${tarefa.idTarefa}">Excluir</button>
+        </div>
+      </div>
+      <div class="tarefa-status">
+        <span class="status-badge">${getStatusText(tarefa.estado_tarefa)}</span>
+      </div>
+    </div>
+  `;
+}
+
+function addTaskEventListeners(idColuna) {
   document.querySelectorAll('.btn-editar').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const idTarefa = parseInt(btn.dataset.id);
-      editarTarefa(idTarefa);
+      editarTarefa(parseInt(btn.dataset.id));
     });
   });
 
   document.querySelectorAll('.btn-excluir').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', async (e) => {
       e.stopPropagation();
-      const idTarefa = parseInt(btn.dataset.id);
-      if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
-        excluirTarefa(idTarefa, idColuna);
-      }
+      await excluirTarefa(parseInt(btn.dataset.id), idColuna);
     });
   });
 }
 
-function editarTarefa(idTarefa) {
+async function editarTarefa(idTarefa) {
   const tarefa = tarefasData.find(t => t.idTarefa === idTarefa);
   if (!tarefa) return;
 
-  // Preenche o formulário
-  document.getElementById('nomeTarefa').value = tarefa.nomeTarefa;
-  document.getElementById('descTarefa').value = tarefa.descTarefa;
-  document.getElementById('idTarefa').value = idTarefa;
-  document.getElementById('coluna_idCol').value = tarefa.coluna_idCol;
+  const form = {
+    nomeTarefa: document.getElementById('nomeTarefa'),
+    descTarefa: document.getElementById('descTarefa'),
+    idTarefaField: document.getElementById('idTarefa'),
+    coluna_idCol: document.getElementById('coluna_idCol'),
+    estadoTarefa: document.getElementById('estadoTarefa')
+  };
 
-  // Altera o botão
-  const submitBtn = document.querySelector('#btn_adiciona_tarefa button');
+  // Preenche os campos do formulário
+  form.nomeTarefa.value = tarefa.nomeTarefa;
+  form.descTarefa.value = tarefa.descTarefa || '';
+  form.idTarefaField.value = idTarefa;
+  form.coluna_idCol.value = tarefa.coluna_idCol;
+  form.estadoTarefa.value = tarefa.estado_tarefa;
+  form.estadoTarefa.style.display = 'block';
+
+  // Altera o texto do botão para "Atualizar"
+  const formActions = document.querySelector('#btn_adiciona_tarefa');
+  const submitBtn = formActions.querySelector('button');
   submitBtn.textContent = 'Atualizar';
+  
+  // Cria ou atualiza o botão de cancelar
+  let cancelBtn = formActions.querySelector('.cancel-btn');
+  if (!cancelBtn) {
+    cancelBtn = document.createElement('button');
+    cancelBtn.className = 'cancel-btn';
+    cancelBtn.textContent = 'Cancelar';
+    cancelBtn.type = 'button';
+    formActions.insertBefore(cancelBtn, submitBtn);
+    
+    // Adiciona evento ao botão de cancelar
+    cancelBtn.addEventListener('click', () => {
+      resetForm();
+      const faseAtiva = document.querySelector('.fase.selecionada');
+      if (faseAtiva) {
+        listarTarefasDaColuna(parseInt(faseAtiva.dataset.id));
+      }
+    });
+  }
+
+  // Rola a página para o formulário
+  document.querySelector('form').scrollIntoView({ behavior: 'smooth' });
 }
+
+function resetForm() {
+  const form = {
+    nomeTarefa: document.getElementById('nomeTarefa'),
+    descTarefa: document.getElementById('descTarefa'),
+    idTarefaField: document.getElementById('idTarefa'),
+    estadoTarefa: document.getElementById('estadoTarefa')
+  };
+  
+  form.nomeTarefa.value = '';
+  form.descTarefa.value = '';
+  form.idTarefaField.value = '';
+  form.estadoTarefa.style.display = 'none';
+  
+  const submitBtn = document.getElementById('enviar_form');
+  submitBtn.textContent = 'Adicionar';
+  
+  // Remove o botão de cancelar se existir
+  const cancelBtn = document.querySelector('#btn_adiciona_tarefa .cancel-btn');
+  if (cancelBtn) {
+    cancelBtn.remove();
+  }
+}
+
 async function excluirTarefa(idTarefa, idColuna) {
   const response = await fetch('excluir_tarefa.php', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ idTarefa, idColuna })
   });
 
-  // Recarrega as tarefas
-  const faseAtiva = document.querySelector('.fase.selecionada');
-  if (faseAtiva) {
-    const idColunaAtiva = parseInt(faseAtiva.dataset.id);
-    listarTarefasDaColuna(idColunaAtiva);
+  // Processar a resposta do servidor
+  const result = await response.json();
+
+  if (result.success) {
+    // Atualizar os dados locais antes de recarregar a lista
+    const taskIndex = tarefasData.findIndex(t => t.idTarefa === idTarefa);
+    if (taskIndex !== -1) {
+      tarefasData.splice(taskIndex, 1);
+    }
+
+    // Recarregar a lista de tarefas e detalhes da fase
+    const faseAtiva = document.querySelector('.fase.selecionada');
+    if (faseAtiva) {
+      const idColunaAtiva = parseInt(faseAtiva.dataset.id);
+      listarTarefasDaColuna(idColunaAtiva);
+      atualizarDetalhesFase(idColunaAtiva);
+      resetForm();
+    }
   }
 }
 
 function getStatusText(estado) {
-  switch (estado) {
-    case 0: return 'Não iniciada';
-    case 1: return 'Em andamento';
-    case 2: return 'Concluída';
-    default: return 'Desconhecido';
-  }
+  const statusMap = {
+    0: 'Não iniciada',
+    1: 'Em andamento',
+    2: 'Concluída'
+  };
+  return statusMap[estado] || 'Desconhecido';
 }
