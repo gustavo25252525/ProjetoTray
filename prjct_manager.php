@@ -16,18 +16,19 @@ function info_proj(PDO $pdo)
 
 function puxa_colunas(PDO $pdo)
 {
-    $sql = "SELECT c.idCol, c.nomeCol
+    $sql = "SELECT DISTINCT c.idCol, c.nomeCol
             FROM coluna c 
-            INNER JOIN projeto_has_coluna pc 
-                ON c.idCol = pc.coluna_idCol 
-            WHERE pc.projeto_idProj = " . $_SESSION["idProj"];
+            INNER JOIN projeto_has_coluna_has_tarefa pct 
+                ON c.idCol = pct.coluna_idCol 
+            WHERE pct.projeto_idProj = " . $_SESSION["idProj"];
     $comando = $pdo->query($sql);
     $colunas = $comando->fetchAll();
 
     return $colunas;
 }
 
-function puxa_tarefas(PDO $pdo) {
+function puxa_tarefas(PDO $pdo)
+{
     $colunas = puxa_colunas($pdo);
     if (empty($colunas)) {
         return [];
@@ -36,11 +37,11 @@ function puxa_tarefas(PDO $pdo) {
     $idsColunas = array_column($colunas, 'idCol');
     $placeholders = implode(',', array_fill(0, count($idsColunas), '?'));
 
-    $sql = "SELECT t.idTarefa, t.nomeTarefa, t.descTarefa, ct.estado_tarefa, ct.coluna_idCol 
+    $sql = "SELECT t.idTarefa, t.nomeTarefa, t.descTarefa, pct.estado_tarefa, pct.coluna_idCol 
             FROM tarefa t 
-            INNER JOIN coluna_has_tarefa ct 
-                ON t.idTarefa = ct.tarefa_idTarefa 
-            WHERE ct.coluna_idCol IN ($placeholders)";
+            INNER JOIN projeto_has_coluna_has_tarefa pct 
+                ON t.idTarefa = pct.tarefa_idTarefa 
+            WHERE pct.coluna_idCol IN ($placeholders) AND pct.projeto_idProj = " . $_SESSION['idProj'];
 
     $comando = $pdo->prepare($sql);
     $comando->execute($idsColunas);
@@ -135,8 +136,16 @@ $tarefas_json = json_encode($lista_tarefas);
                             <input type="text" name="desc" id="descTarefa" placeholder="Descrição">
                         </div>
 
+                        <div class="form_group">
+                            <select name="estado" id="estadoTarefa" class="form-control">
+                                <option value="0">Não iniciada</option>
+                                <option value="1">Em andamento</option>
+                                <option value="2">Concluída</option>
+                            </select>
+                        </div>
+
                         <div id="btn_adiciona_tarefa">
-                            <button type="submit">Adicionar</button>
+                            <button type="submit" id="enviar_form">Adicionar</button>
                         </div>
                     </form>
                 </div>
