@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include 'conexao.php';
 $conexao = mysqli_connect("localhost", "root", "", "ProjetoTray");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idFunc'])) {

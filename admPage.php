@@ -50,10 +50,7 @@ $result1 = mysqli_query($conexao, $sql2);
             <li class="item-menu"><a href="#" onclick="mostrarAba('clientes')"><i class="bi bi-person-fill"></i><span class="txt-link">Cliente</span></a></li>
         </ul>
     </nav>
-
     <main class="main-conteudo">
-        
-
         <div id="home" class="aba-conteudo"> <h2><strong>Bem Vindo à Área do Administrador</strong><br> <br>
         📋Aqui, você tem acesso às informações essenciais dos funcionários e clientes cadastrados.<br>
         De forma prática, é possível consultar e editar dados como: <br>
@@ -62,12 +59,10 @@ $result1 = mysqli_query($conexao, $sql2);
         Gerenciar os projetos vinculados a cada colaborador.</h2> </div>
 
         <div id="funcionarios" class="aba-conteudo" style="display:none;">
-            <h2>Lista de Funcionários</h2>
             <?php include 'list_funcionarios.php'; ?>
         </div>
 
         <div id="clientes" class="aba-conteudo" style="display:none;">
-            <h2>Lista de Clientes</h2>
             <?php include 'list_clientes.php'; ?>
         </div>
     </main>

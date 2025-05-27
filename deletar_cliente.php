@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idCli'])) {
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
 
-        // Redireciona para a página principal 
         header("Location: admPage.php");
         exit();
     } else {
