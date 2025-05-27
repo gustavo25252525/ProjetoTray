@@ -14,22 +14,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['nomeFunc'], $_POST['c
     $email = mysqli_real_escape_string($conexao, $_POST['emailLogin']);
     $senha = password_hash($_POST['senhaLogin'], PASSWORD_DEFAULT);
 
-    // Inserir na tabela login com tipo_idTipo
-    $insertLogin = "INSERT INTO login (emailLogin, senhaLogin, tipo_idTipo) VALUES ('$email', '$senha', $tipoId)";
-    if (mysqli_query($conexao, $insertLogin)) {
-        $idLogin = mysqli_insert_id($conexao);
-
-        // Inserir na tabela funcionario
-        $insertFunc = "INSERT INTO funcionario (nomeFunc, cargoFunc, login_idLogin) VALUES ('$nome', '$cargo', $idLogin)";
-        if (!mysqli_query($conexao, $insertFunc)) {
-            echo "Erro ao cadastrar funcionário: " . mysqli_error($conexao);
-        } else {
-            // Redireciona para evitar reenvio do formulário
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
-        }
+    // Verifica se o email já existe na tabela login para evitar duplicidade
+    $checkEmail = "SELECT idLogin FROM login WHERE emailLogin = '$email' LIMIT 1";
+    $resCheck = mysqli_query($conexao, $checkEmail);
+    if (mysqli_num_rows($resCheck) > 0) {
+        echo "<p style='color:red;'>Erro: Email já cadastrado.</p>";
     } else {
-        echo "Erro ao cadastrar login: " . mysqli_error($conexao);
+        // Inserir na tabela login com tipo_idTipo
+        $insertLogin = "INSERT INTO login (emailLogin, senhaLogin, tipo_idTipo) VALUES ('$email', '$senha', $tipoId)";
+        if (mysqli_query($conexao, $insertLogin)) {
+            $idLogin = mysqli_insert_id($conexao);
+
+            // Inserir na tabela funcionario
+            $insertFunc = "INSERT INTO funcionario (nomeFunc, cargoFunc, login_idLogin) VALUES ('$nome', '$cargo', $idLogin)";
+            if (!mysqli_query($conexao, $insertFunc)) {
+                echo "<p style='color:red;'>Erro ao cadastrar funcionário: " . mysqli_error($conexao) . "</p>";
+            } else {
+                echo "<p style='color:green;'>Funcionário cadastrado com sucesso.</p>";
+                // Opcional: aqui você pode limpar $_POST para evitar duplicação se quiser
+            }
+        } else {
+            echo "<p style='color:red;'>Erro ao cadastrar login: " . mysqli_error($conexao) . "</p>";
+        }
     }
 }
 
@@ -45,7 +51,7 @@ if (!$result) {
     die("Erro na consulta: " . mysqli_error($conexao));
 }
 
-// Título com botão "Novo Usuário"
+// Título com botão "Novo Funcionario"
 echo '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
         <h2 style="margin: 0;">Lista de Funcionários</h2>
         <button onclick="document.getElementById(\'modal-novo-funcionario\').style.display=\'block\'" 

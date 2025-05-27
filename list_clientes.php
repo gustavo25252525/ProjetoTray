@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['nomeCli'], $_POST['em
                 echo "<p style='color:red;'>Erro ao cadastrar cliente: " . mysqli_error($conexao) . "</p>";
             } else {
                 // Redireciona para evitar reenvio do formulário
-                echo "<p style='color:green;'>Cliente cadastrado com sucesso.</p>";
+                echo "<p style='color:green;'>Cliente cadastrado com sucesso.</p>"; 
             }
         } else {
             echo "<p style='color:red;'>Erro ao cadastrar login: " . mysqli_error($conexao) . "</p>";
