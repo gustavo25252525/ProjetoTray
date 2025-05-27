@@ -1,12 +1,10 @@
 <?php
 include 'conexao.php';
 
-// Verifica conexão
 if (!$conexao) {
     die("Erro de conexão: " . mysqli_connect_error());
 }
 
-// Tipo padrão para funcionário (ajuste conforme seu banco)
 $tipoId = 1; 
 
 // Tratamento do POST para cadastrar novo funcionário

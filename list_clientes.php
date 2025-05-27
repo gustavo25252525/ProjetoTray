@@ -1,12 +1,10 @@
 <?php
 include 'conexao.php';
 
-// Verifica conexão
 if (!$conexao) {
     die("Erro de conexão: " . mysqli_connect_error());
 }
 
-// Tipo padrão para cliente (ajuste conforme seu banco)
 $tipoId = 2;
 
 // Tratamento do POST para cadastrar novo cliente

@@ -5,7 +5,7 @@ $conexao = mysqli_connect("localhost", "root", "", "ProjetoTray");
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idFunc'])) {
     $idFunc = intval($_POST['idFunc']);
 
-    // Primeiro, obtenha o idLogin associado ao funcionário
+    // Obter o idLogin associado ao funcionário
     $sql = "SELECT login_idLogin FROM funcionario WHERE idFunc = ?";
     $stmt = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($stmt, "i", $idFunc);

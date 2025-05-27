@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$nomeFunc, $cargoFunc, $emailLogin, $idFunc]);
 
-        header("Location: admPage.php"); // Redireciona de volta à página principal
+        header("Location: admPage.php");
     } catch (PDOException $e) {
         echo "Erro ao atualizar funcionário: " . $e->getMessage();
     }
