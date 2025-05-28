@@ -246,3 +246,17 @@ INSERT INTO destinatario (notificacao_idNot, login_idLogin) VALUES
 (1, 1),
 (1, 2),
 (2, 2);
+
+-- Tabela de sugestões
+CREATE TABLE sugestoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_Cli INT NOT NULL,
+    tarefa VARCHAR(255) NOT NULL,
+    categoria ENUM('adicionar', 'incrementar', 'remover') NOT NULL,
+    mensagem TEXT NOT NULL,
+    status ENUM('em_analise', 'com_feedback') DEFAULT 'em_analise',
+    resposta_funcionario TEXT,
+    feedback ENUM('positivo', 'negativo'),
+    data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_Cli) REFERENCES cliente(idCli)
+);

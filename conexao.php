@@ -2,10 +2,10 @@
 
     $tipo_banco = "mysql";
     $servidor   = "localhost";
-    $porta      = 3307;
+    $porta      = 3306;
     $banco      = "ProjetoTray";
     $usuario    = "root";
-    $senha      = "1234";
+    $senha      = "0805";
 
     $dsn        = "$tipo_banco:host=$servidor;dbname=$banco;port=$porta;charset=utf8mb4";
 

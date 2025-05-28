@@ -1,6 +1,6 @@
 <?php 
 
-$conexao = mysqli_connect("localhost", "root", "", "ProjetoTray");
+$conexao = mysqli_connect("localhost", "root", "0805", "ProjetoTray");
 
 $sql1 = "SELECT * FROM cliente ORDER BY idCli DESC";
 $result = mysqli_query($conexao, $sql1);

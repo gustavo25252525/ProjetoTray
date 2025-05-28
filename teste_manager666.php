@@ -75,7 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar_sugestao'])) {
     $categoria = $_POST['categoria'];
 
     $stmt = $pdo->prepare("INSERT INTO sugestoes (id_cliente, tarefa, categoria, mensagem) VALUES (?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO sugestao (idCliente, tarefa, categoria, mensagem) VALUES (?, ?, ?, ?)");
     $stmt->execute([$id_cliente, $tarefa, $categoria, $mensagem]);
+
 }
 
 ?>
@@ -201,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar_sugestao'])) {
                     <h4>Sugestões em Análise</h4>
                     <?php
                     $res = $pdo->query("SELECT tarefa, mensagem, categoria FROM sugestoes WHERE status = 'em_analise'");
-                    while ($row = $res->fetch()) {
+                    while ($row = $result->fetch()) {
                         echo "<div style='border:1px solid #ccc; padding:10px; margin:5px 0;'>";
                         echo "<b>Tarefa:</b> " . htmlspecialchars($row['tarefa']) . "<br>";
                         echo "<b>Categoria:</b> " . htmlspecialchars($row['categoria']) . "<br>";
@@ -214,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar_sugestao'])) {
                     <h4>Sugestões com Feedback</h4>
                     <?php
                     $res = $pdo->query("SELECT tarefa, mensagem, resposta_funcionario, feedback FROM sugestoes WHERE status = 'com_feedback'");
-                    while ($row = $res->fetch()) {
+                    while ($row = $result->fetch()) {
                         echo "<div style='border:1px solid #ccc; padding:10px; margin:5px 0;'>";
                         echo "<b>Tarefa:</b> " . htmlspecialchars($row['tarefa']) . "<br>";
                         echo "<b>Mensagem:</b> " . nl2br(htmlspecialchars($row['mensagem'])) . "<br>";
