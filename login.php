@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form>
           <label for="chk" aria-hidden="true">Cliente</label>
           <input type="email" name="email" placeholder="E-mail" required="" />
-          <input type="password" name="pswd" placeholder="Senha" required="" />
+          <input type="password" name="senha" placeholder="Senha" required="" />
           <button>Login</button>
         </form>
       </div>
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form>
           <label for="chk" aria-hidden="true">Administrador</label>
           <input type="email" name="email" placeholder="E-mail" required="" />
-          <input type="password" name="pswd" placeholder="senha" required="" />
+          <input type="password" name="senha" placeholder="senha" required="" />
           <button>Login</button>
         </form>
       </div>
