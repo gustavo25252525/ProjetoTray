@@ -1,56 +1,14 @@
 <?php
 include 'conexao.php';
 
-if (!$conexao) {
-    die("Erro de conexão: " . mysqli_connect_error());
-}
-
-$tipoId = 2;
-
-// Tratamento do POST para cadastrar novo cliente
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['nomeCli'], $_POST['empresaCli'], $_POST['telefoneCli'], $_POST['emailLogin'], $_POST['senhaLogin'])) {
-    $nome = mysqli_real_escape_string($conexao, $_POST['nomeCli']);
-    $empresa = mysqli_real_escape_string($conexao, $_POST['empresaCli']);
-    $telefone = mysqli_real_escape_string($conexao, $_POST['telefoneCli']);
-    $email = mysqli_real_escape_string($conexao, $_POST['emailLogin']);
-    $senha = password_hash($_POST['senhaLogin'], PASSWORD_DEFAULT);
-
-    // Verifica se o email já existe na tabela login para evitar duplicidade
-    $checkEmail = "SELECT idLogin FROM login WHERE emailLogin = '$email' LIMIT 1";
-    $resCheck = mysqli_query($conexao, $checkEmail);
-    if (mysqli_num_rows($resCheck) > 0) {
-        echo "<p style='color:red;'>Erro: Email já cadastrado.</p>";
-    } else {
-        // Inserir na tabela login com tipo_idTipo
-        $insertLogin = "INSERT INTO login (emailLogin, senhaLogin, tipo_idTipo) VALUES ('$email', '$senha', $tipoId)";
-        if (mysqli_query($conexao, $insertLogin)) {
-            $idLogin = mysqli_insert_id($conexao);
-
-            // Inserir na tabela cliente
-            $insertCli = "INSERT INTO cliente (nomeCli, empresaCli, telefoneCli, login_idLogin) VALUES ('$nome', '$empresa', '$telefone', $idLogin)";
-            if (!mysqli_query($conexao, $insertCli)) {
-                echo "<p style='color:red;'>Erro ao cadastrar cliente: " . mysqli_error($conexao) . "</p>";
-            } else {
-                // Redireciona para evitar reenvio do formulário
-                echo "<p style='color:green;'>Cliente cadastrado com sucesso.</p>"; 
-            }
-        } else {
-            echo "<p style='color:red;'>Erro ao cadastrar login: " . mysqli_error($conexao) . "</p>";
-        }
-    }
-}
-
 // Listagem de Clientes
 $sql = "SELECT c.idCli, c.nomeCli, c.empresaCli, c.telefoneCli, l.emailLogin 
         FROM cliente c
-        JOIN login l ON c.login_idLogin = l.idLogin
-        ORDER BY c.idCli DESC";
+        INNER JOIN login l ON c.login_idLogin = l.idLogin
+        ORDER BY c.idCli";
 
-$result = mysqli_query($conexao, $sql);
-
-if (!$result) {
-    die("Erro na consulta: " . mysqli_error($conexao));
-}
+$comando = $pdo->query($sql);
+$lista_cliente = $comando->fetchAll();
 
 // Título com botão "Novo Cliente"
 echo '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -62,14 +20,14 @@ echo '<div style="display: flex; justify-content: space-between; align-items: ce
       </div>';
 
 // Listagem de clientes
-if (mysqli_num_rows($result) > 0) {
+if (count($lista_cliente) > 0) {
     echo "<ul>";
-    while ($row = mysqli_fetch_assoc($result)) {
-        $id = $row['idCli'];
-        $nome = addslashes($row['nomeCli']);
-        $empresa = addslashes($row['empresaCli']);
-        $telefone = addslashes($row['telefoneCli']);
-        $email = addslashes($row['emailLogin']);
+    foreach ($lista_cliente as $cliente) {
+        $id = $cliente['idCli'];
+        $nome = $cliente['nomeCli'];
+        $empresa = $cliente['empresaCli'];
+        $telefone = $cliente['telefoneCli'];
+        $email = $cliente['emailLogin'];
 
         echo "<li>
                 <span class='nome'>{$nome}</span> - {$empresa} - {$telefone} - <span class='email'>({$email})</span>
@@ -85,7 +43,7 @@ if (mysqli_num_rows($result) > 0) {
 <!-- Modal de Cadastro de Novo Cliente -->
 <div id="modal-novo-cliente" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; padding:20px; border:1px solid #ccc; z-index:1000;">
     <h3>Novo Cliente</h3>
-    <form method="POST" action="">
+    <form method="POST" action="salvar_cliente.php">
         <label>Nome:</label><br>
         <input type="text" name="nomeCli" required><br>
         <label>Empresa:</label><br>

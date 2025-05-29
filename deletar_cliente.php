@@ -1,40 +1,20 @@
 <?php
-include 'db.php'; 
-$conexao = mysqli_connect("localhost", "root", "", "ProjetoTray");
+include 'conexao.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idCli'])) {
-    $idCli = intval($_POST['idCli']);
+$sql = "SELECT login_idLogin FROM cliente WHERE idCli = ?";
+$comando = $pdo->prepare($sql);
+$comando->execute([$idCli]);
+$login_cliente = $comando->fetch(PDO::FETCH_ASSOC);
 
-    
-    $sql = "SELECT login_idLogin FROM cliente WHERE idCli = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $idCli);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $idLogin);
-    mysqli_stmt_fetch($stmt);
-    mysqli_stmt_close($stmt);
+$idLogin = $login_cliente['login_idLogin'];
 
-    if ($idLogin) {
-        // Deletar o cliente
-        $sql = "DELETE FROM cliente WHERE idCli = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "i", $idCli);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
+$sql = "DELETE FROM cliente WHERE idCli = ?";
+$comando = $pdo->prepare($sql);
+$comando->execute([$idCli]);
 
-        // Deletar o login associado
-        $sql = "DELETE FROM login WHERE idLogin = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "i", $idLogin);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
+$sql = "DELETE FROM login WHERE idLogin = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$idLogin]);
 
-        header("Location: admPage.php");
-        exit();
-    } else {
-        echo "Cliente não encontrado.";
-    }
-} else {
-    echo "Requisição inválida.";
-}
-?>
+header("Location: admPage.php");
+exit();

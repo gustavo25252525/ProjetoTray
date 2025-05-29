@@ -403,7 +403,7 @@ main, header {
     align-items: flex-start;
 }
 
-.btn-editar, .btn-excluir {
+.btn-editar, .btn-excluir, .btn-sugestao {
     background: none;
     border: none;
     cursor: pointer;
@@ -420,12 +420,20 @@ main, header {
     background-color: rgba(231, 76, 60, 0.3);
 }
 
+.btn-sugestao {
+    background-color: rgba(255, 252, 54, 0.5);
+}
+
 .btn-editar:hover {
     background-color: rgba(52, 152, 219, 0.5);
 }
 
 .btn-excluir:hover {
     background-color: rgba(231, 76, 60, 0.5);
+}
+
+.btn-sugestao:hover {
+    background-color: rgba(228, 225, 48, 0.5);
 }
 
 /* Container principal da sugestão */
@@ -509,4 +517,10 @@ main, header {
 .sugestao-item b {
     display: inline-block;
     min-width: 90px;
+}
+
+#sugestao {
+    border: 1px solid #ccc; 
+    padding: 10px;
+    margin: 5px 0;
 }

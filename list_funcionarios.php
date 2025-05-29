@@ -1,55 +1,13 @@
 <?php
 include 'conexao.php';
 
-if (!$conexao) {
-    die("Erro de conexão: " . mysqli_connect_error());
-}
-
-$tipoId = 1; 
-
-// Tratamento do POST para cadastrar novo funcionário
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['nomeFunc'], $_POST['cargoFunc'], $_POST['emailLogin'], $_POST['senhaLogin'])) {
-    $nome = mysqli_real_escape_string($conexao, $_POST['nomeFunc']);
-    $cargo = mysqli_real_escape_string($conexao, $_POST['cargoFunc']);
-    $email = mysqli_real_escape_string($conexao, $_POST['emailLogin']);
-    $senha = password_hash($_POST['senhaLogin'], PASSWORD_DEFAULT);
-
-    // Verifica se o email já existe na tabela login para evitar duplicidade
-    $checkEmail = "SELECT idLogin FROM login WHERE emailLogin = '$email' LIMIT 1";
-    $resCheck = mysqli_query($conexao, $checkEmail);
-    if (mysqli_num_rows($resCheck) > 0) {
-        echo "<p style='color:red;'>Erro: Email já cadastrado.</p>";
-    } else {
-        // Inserir na tabela login com tipo_idTipo
-        $insertLogin = "INSERT INTO login (emailLogin, senhaLogin, tipo_idTipo) VALUES ('$email', '$senha', $tipoId)";
-        if (mysqli_query($conexao, $insertLogin)) {
-            $idLogin = mysqli_insert_id($conexao);
-
-            // Inserir na tabela funcionario
-            $insertFunc = "INSERT INTO funcionario (nomeFunc, cargoFunc, login_idLogin) VALUES ('$nome', '$cargo', $idLogin)";
-            if (!mysqli_query($conexao, $insertFunc)) {
-                echo "<p style='color:red;'>Erro ao cadastrar funcionário: " . mysqli_error($conexao) . "</p>";
-            } else {
-                echo "<p style='color:green;'>Funcionário cadastrado com sucesso.</p>";
-                // Opcional: aqui você pode limpar $_POST para evitar duplicação se quiser
-            }
-        } else {
-            echo "<p style='color:red;'>Erro ao cadastrar login: " . mysqli_error($conexao) . "</p>";
-        }
-    }
-}
-
 // Listagem de Funcionários
 $sql = "SELECT f.idFunc, f.nomeFunc, f.cargoFunc, l.emailLogin 
         FROM funcionario f
         JOIN login l ON f.login_idLogin = l.idLogin
-        ORDER BY f.idFunc DESC";
-
-$result = mysqli_query($conexao, $sql);
-
-if (!$result) {
-    die("Erro na consulta: " . mysqli_error($conexao));
-}
+        ORDER BY f.idFunc";
+$comando = $pdo->query($sql);
+$lista_funcionarios = $comando->fetchAll();
 
 // Título com botão "Novo Funcionario"
 echo '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -61,13 +19,13 @@ echo '<div style="display: flex; justify-content: space-between; align-items: ce
       </div>';
 
 // Listagem de funcionários
-if (mysqli_num_rows($result) > 0) {
+if (count($lista_funcionarios) > 0) {
     echo "<ul>";
-    while ($row = mysqli_fetch_assoc($result)) {
-        $id = $row['idFunc'];
-        $nome = addslashes($row['nomeFunc']);
-        $cargo = addslashes($row['cargoFunc']);
-        $email = addslashes($row['emailLogin']);
+    foreach ($lista_funcionarios as $funcionario) {
+        $id = $funcionario['idFunc'];
+        $nome = $funcionario['nomeFunc'];
+        $cargo = $funcionario['cargoFunc'];
+        $email = $funcionario['emailLogin'];
         
         echo "<li>
                 <span class='nome'>{$nome}</span> - {$cargo} - <span class='email'>({$email})</span>
@@ -83,7 +41,7 @@ if (mysqli_num_rows($result) > 0) {
 <!-- Modal de Cadastro de Novo Funcionário -->
 <div id="modal-novo-funcionario" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; padding:20px; border:1px solid #ccc; z-index:1000;">
     <h3>Novo Funcionário</h3>
-    <form method="POST" action="">
+    <form method="POST" action="salvar_funcionario.php">
         <label>Nome:</label><br>
         <input type="text" name="nomeFunc" required><br>
         <label>Cargo:</label><br>

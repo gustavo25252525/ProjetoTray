@@ -1,17 +1,18 @@
 <?php 
+include "conexao.php";
 
-$conexao = mysqli_connect("localhost", "root", "0805", "ProjetoTray");
+$sql = "SELECT * FROM cliente ORDER BY idCli DESC";
+$comando = $pdo->query($sql);
+$clientes = $comando->fetchAll();
 
-$sql1 = "SELECT * FROM cliente ORDER BY idCli DESC";
-$result = mysqli_query($conexao, $sql1);
-
-$sql2 = "SELECT * FROM funcionario ORDER BY idFunc DESC";
-$result1 = mysqli_query($conexao, $sql2);
+$sql = "SELECT * FROM funcionario ORDER BY idFunc DESC";
+$comando = $pdo->query($sql);
+$funcionarios = $comando->fetchAll();
 ?>
 
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

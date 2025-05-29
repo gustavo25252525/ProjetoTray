@@ -22,7 +22,9 @@ function mudaFaseSelecionada() {
   this.classList.add('selecionada');
 
   const idColuna = parseInt(this.dataset.id);
-  document.getElementById('coluna_idCol').value = idColuna;
+  if (document.querySelector('.adicionar_tarefa') !== null) {
+    document.getElementById('coluna_idCol').value = idColuna;
+  }
 
   atualizarDetalhesFase(idColuna);
   listarTarefasDaColuna(idColuna);
@@ -83,6 +85,8 @@ function listarTarefasDaColuna(idColuna) {
 }
 
 function createTaskElement(tarefa) {
+  const isClientView = document.querySelector('.adicionar_tarefa') === null;
+  
   return `
     <div class="tarefa-item estado-${tarefa.estado_tarefa}" data-id="${tarefa.idTarefa}">
       <div class="tarefa-conteudo">
@@ -91,8 +95,11 @@ function createTaskElement(tarefa) {
           <p>${tarefa.descTarefa || 'Sem descrição'}</p>
         </div>
         <div class="tarefa-acoes">
-          <button class="btn-editar" data-id="${tarefa.idTarefa}">Editar</button>
-          <button class="btn-excluir" data-id="${tarefa.idTarefa}">Excluir</button>
+          ${isClientView
+            ? `<button class="btn-sugestao" data-id="${tarefa.idTarefa}">Sugestão</button>`
+            : `<button class="btn-editar" data-id="${tarefa.idTarefa}">Editar</button>
+               <button class="btn-excluir" data-id="${tarefa.idTarefa}">Excluir</button>`
+          }
         </div>
       </div>
       <div class="tarefa-status">
@@ -103,23 +110,32 @@ function createTaskElement(tarefa) {
 }
 
 function addTaskEventListeners(idColuna) {
-  document.querySelectorAll('.btn-editar').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      editarTarefa(parseInt(btn.dataset.id));
+  if (document.querySelector('.adicionar_tarefa') === null) {
+    document.querySelectorAll('.btn-sugestao').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sugerirMudanca(parseInt(btn.dataset.id), idColuna);
+      });
     });
-  });
+  } else {
+    document.querySelectorAll('.btn-editar').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        editarTarefa(parseInt(btn.dataset.id), idColuna);
+      });
+    });
 
-  document.querySelectorAll('.btn-excluir').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      await excluirTarefa(parseInt(btn.dataset.id), idColuna);
+    document.querySelectorAll('.btn-excluir').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        await excluirTarefa(parseInt(btn.dataset.id), idColuna);
+      });
     });
-  });
+  }
 }
 
-async function editarTarefa(idTarefa) {
-  const tarefa = tarefasData.find(t => t.idTarefa === idTarefa);
+async function editarTarefa(idTarefa, idColuna) {
+  const tarefa = tarefasData.find(t => t.idTarefa === idTarefa && t.coluna_idCol === idColuna);
   if (!tarefa) return;
 
   const form = {
@@ -139,10 +155,10 @@ async function editarTarefa(idTarefa) {
   form.estadoTarefa.style.display = 'block';
 
   // Altera o texto do botão para "Atualizar"
-  const formActions = document.querySelector('#btn_adiciona_tarefa');
-  const submitBtn = formActions.querySelector('button');
+  const formActions = document.getElementById('btn_adiciona_tarefa');
+  const submitBtn = document.getElementById('enviar_form');
   submitBtn.textContent = 'Atualizar';
-  
+
   // Cria ou atualiza o botão de cancelar
   let cancelBtn = formActions.querySelector('.cancel-btn');
   if (!cancelBtn) {
@@ -151,7 +167,7 @@ async function editarTarefa(idTarefa) {
     cancelBtn.textContent = 'Cancelar';
     cancelBtn.type = 'button';
     formActions.insertBefore(cancelBtn, submitBtn);
-    
+
     // Adiciona evento ao botão de cancelar
     cancelBtn.addEventListener('click', () => {
       resetForm();
@@ -163,7 +179,7 @@ async function editarTarefa(idTarefa) {
   }
 
   // Rola a página para o formulário
-  document.querySelector('form').scrollIntoView({ behavior: 'smooth' });
+  document.querySelector('body').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function resetForm() {
@@ -173,15 +189,15 @@ function resetForm() {
     idTarefaField: document.getElementById('idTarefa'),
     estadoTarefa: document.getElementById('estadoTarefa')
   };
-  
+
   form.nomeTarefa.value = '';
   form.descTarefa.value = '';
   form.idTarefaField.value = '';
   form.estadoTarefa.style.display = 'none';
-  
+
   const submitBtn = document.getElementById('enviar_form');
   submitBtn.textContent = 'Adicionar';
-  
+
   // Remove o botão de cancelar se existir
   const cancelBtn = document.querySelector('#btn_adiciona_tarefa .cancel-btn');
   if (cancelBtn) {
@@ -224,4 +240,12 @@ function getStatusText(estado) {
     2: 'Concluída'
   };
   return statusMap[estado] || 'Desconhecido';
+}
+
+function sugerirMudanca(idTarefa, idColuna) {
+  const tarefa = tarefasData.find(t => t.idTarefa === idTarefa && t.coluna_idCol === idColuna);
+  document.getElementById('tarefa_selecionada').value = tarefa.nomeTarefa;
+  
+  // Rola a página para o formulário
+  document.querySelector('.sugestao-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
