@@ -73,6 +73,13 @@ function puxa_sugestoes_com_feedback(PDO $pdo)
     return $comando->fetchAll();
 }
 
+function listar_projetos(PDO $pdo)
+{
+    $sql = "SELECT idProj, nomeProj FROM projeto";
+    return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 include "conexao.php";
 
 $projeto = info_proj($pdo);
@@ -84,6 +91,8 @@ $lista_sugestoes_com_feedback = puxa_sugestoes_com_feedback(($pdo));
 
 $colunas_json = json_encode($lista_colunas);
 $tarefas_json = json_encode($lista_tarefas);
+
+$projetos = listar_projetos($pdo);
 
 ?>
 
@@ -118,6 +127,40 @@ $tarefas_json = json_encode($lista_tarefas);
             <!-- Linha do tempo do projeto -->
             <div class="timeline">
                 <h2>Desenvolvimento</h2>
+                <button id="opnTimelineModal">Open Modal Teste</button>
+                <dialog id="dialogTimelineModal">
+                        <form method="post" action="adicionar_fase.php">
+                            <label for="idProjeto">Projeto:</label>
+                                <select id="idProjeto" name="idProjeto" required>
+                                  <option value="">Selecione um projeto</option>
+                                  <?php foreach ($projetos as $proj): ?>
+                                    <option value="<?= htmlspecialchars($proj['idProj']) ?>">
+                                      <?= htmlspecialchars($proj['nomeProj']) ?>
+                                    </option>
+                                  <?php endforeach; ?>
+                                </select>
+                                
+                                <br><br>
+                                
+                                <label for="nomeFase">Nome da Fase:</label>
+                                <input type="text" id="nomeFase" name="nomeFase" required>
+                                
+                                <br><br>
+                                
+                                <label for="nomeTarefa">Nome da Primeira Tarefa:</label>
+                                <input type="text" id="nomeTarefa" name="nomeTarefa" required>
+                                
+                                <br><br>
+                                
+                                <label for="descTarefa">Descrição da Primeira Tarefa:</label>
+                                <textarea id="descTarefa" name="descTarefa"></textarea>
+                                
+                                <br><br>
+                                
+                                <button type="submit">Adicionar Fase com Tarefa</button>
+                        </form>
+                    <button id="closeTimelineModal">Close</button>
+                </dialog>
                 <div class="etapas">
                     <?php foreach ($lista_colunas as $coluna) { ?>
                         <div class="fase" data-id="<?= $coluna['idCol'] ?>"><?= $coluna["nomeCol"] ?></div>
@@ -238,5 +281,9 @@ $tarefas_json = json_encode($lista_tarefas);
 
 </body>
 
+<<<<<<< HEAD
+
+</html>
+=======
 </html>
 

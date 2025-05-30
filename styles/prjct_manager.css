@@ -524,3 +524,14 @@ main, header {
     padding: 10px;
     margin: 5px 0;
 }
+
+#dialogTimelineModal{
+    margin: auto;
+    padding: 2rem;
+    border: none;
+    border-radius: 6px;
+}
+
+#dialogTimelineModal::backdrop{
+    background-color: rgba(0, 0, 0, 0.8);
+}

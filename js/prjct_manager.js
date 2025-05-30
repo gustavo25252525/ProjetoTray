@@ -249,3 +249,17 @@ function sugerirMudanca(idTarefa, idColuna) {
   // Rola a página para o formulário
   document.querySelector('.sugestao-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const opnTimelineModal = document.querySelector('#opnTimelineModal');
+  const closeTimelineModal = document.querySelector('#closeTimelineModal');
+  const timelineModal = document.querySelector('#dialogTimelineModal');
+
+  opnTimelineModal.addEventListener("click", () => {
+      timelineModal.showModal();
+  });
+
+  closeTimelineModal.addEventListener("click", () => {
+    timelineModal.close();
+  });
+});
