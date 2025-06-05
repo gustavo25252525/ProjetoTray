@@ -1,4 +1,4 @@
-<?php 
+<?php
 include "conexao.php";
 
 $sql = "SELECT * FROM cliente ORDER BY idCli DESC";
@@ -39,7 +39,13 @@ $funcionarios = $comando->fetchAll();
     </script>
 </head>
 <body>
-    <img src="assets/logotray.png" class="logo" alt="Logo">
+    <div class="header-container">
+        
+        <input type="text" id="pesquisa" placeholder="Buscar cliente..." oninput="filtrar(this.value)">
+        <img src="assets/logotray.png" class="logo" alt="Logo">
+       
+
+    </div> 
     <nav class="menu-lateral">
         <div class="btn-expandir">
             <i class="bi bi-list" id="bnt-exp"></i>
